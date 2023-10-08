@@ -1,50 +1,50 @@
 # Used in your course's URL: https://app.codecrafters.io/courses/<slug>
 # Example: "redis"
-slug: "your_course_slug"
+slug: "dns-server"
 
 # The name of your course. This will be displayed in the course catalog, and on other course pages.
 # Example: "Build your own Redis"
-name: "Build your own something"
+name: "Build your own dns"
 
-# A short name for your course, this'll be used in copy like emails. 
+# A short name for your course, this'll be used in copy like emails.
 # Example: "Redis"
-short_name: "dummy"
+short_name: "dns"
 
-# The release status for your course. 
+# The release status for your course.
 #
-# - alpha: Only visible to yourself and CodeCrafters staff. 
+# - alpha: Only visible to yourself and CodeCrafters staff.
 # - beta: Visible to all CodeCrafters users, but with a "beta" label.
 # - live: Visible to all CodeCrafters users, no label.
-# 
+#
 # Allowed values: "alpha", "beta", "live"
 release_status: "alpha"
 
 # This is shown on the course overview page. Markdown supported, recommended length ~30 words.
-# 
-# Recommended format: 
-# 
+#
+# Recommended format:
+#
 # > In this challenge, you'll build ABC that's capable of D, E, F and G. Along the way, we'll learn about X, Y, Z and more.
-# 
+#
 # Example:
-# 
+#
 # > In this challenge, you'll build a toy Redis clone that's capable of handling basic commands like PING, GET
 # > and SET. Along the way, we'll learn about event loops, the Redis Protocol and more.
 description_md: |-
-  Add a description for your course here.
+  In this challenge, you'll build a DNS server that's capable of parsing and creating DNS packets, responding to DNS queries, handling various record types and doing recursive resolve. Along the way we'll learn about the DNS protocol, DNS packet format, root servers, authoritative servers, forwarding servers, various record types (A, AAAA, CNAME, etc) and more.
 
 # This is shown on the catalog. Plaintext only, recommended length ~10 words.
-# 
-# Recommended format: 
-# 
+#
+# Recommended format:
+#
 # > Learn about X, Y, Z and more
-# 
-# Example: 
+#
+# Example:
 #
 # > Learn about TCP servers, the Redis protocol and more
-# 
+#
 # **TODO**: Remove _md suffix since markdown isn't supported
 short_description_md: |-
-  Add a short description for your course here.
+  Learn about DNS protocol, record types, recursive resolve, forwarding servers and more.
 
 # The percentage of users who complete your course. We'll calculate this automatically in the future, safe to ignore for now.
 completion_percentage: 15
@@ -56,10 +56,10 @@ languages:
   - slug: "rust"
 
 marketing:
-  # Shown in the catalog. 
-  # 
+  # Shown in the catalog.
+  #
   # Recommended guidelines:
-  # 
+  #
   # - "easy": < 2h of work for an experienced developer
   # - "medium": > 6h of work for an experienced developer
   # - "hard": > 6h of work for an experienced developer
@@ -69,11 +69,11 @@ marketing:
 
   # This is shown as an example when users suggest extensions to your course.
   # Example: "Persistence" (from the Redis challenge)
-  sample_extension_idea_title: "My course extension idea"
+  sample_extension_idea_title: "EDNS"
 
   # This is shown as an example when users suggest extensions to your course.
   # Example: "A Redis server that can read and write .rdb files" (from the Redis challenge)
-  sample_extension_idea_description: "A description for my course extension idea"
+  sample_extension_idea_description: "Extend the DNS protocol with different abilities"
 
   # These are some default testimonials that you can use. Feel free to switch these out with your own.
   testimonials:
@@ -95,34 +95,207 @@ stages:
   - slug: "init" # A identifier for this stage, needs to be unique within a course.
 
     # The name of the stage. This is shown in the course catalog, and on other course pages.
-    name: "The first stage"
+    name: "Setup UDP server"
 
-    # The difficulty of this stage. 
-    # 
+    # The difficulty of this stage.
+    #
     # Recommended guidelines, based on how long the stage will take an experienced developer to complete:
-    # 
-    # - Very Easy (< 5 minutes) 
-    # - Easy (5-10 minutes) 
-    # - Medium (30m-1h) 
+    #
+    # - Very Easy (< 5 minutes)
+    # - Easy (5-10 minutes)
+    # - Medium (30m-1h)
     # - Hard (> 1h)
-    # 
+    #
     # Allowed values: "very_easy", "easy", "medium", "hard"
     difficulty: very_easy
 
     # The instructions for your stage. Markdown supported. Shown on the course page.
     description_md: |-
-      In this stage, we'll do XYZ
+      In this stage, we'll start a UDP server on port 5353.
 
-      **Example:** ABC
+      The [User Datagram Protocol (UDP)](https://en.wikipedia.org/wiki/User_Datagram_Protocol) is one of the core communication protocols of the Internet protocol suite used to send messages (transported as datagrams in packets) to other hosts on an [Internet Protocol (IP)](https://en.wikipedia.org/wiki/Internet_Protocol) network.
 
       Your program will be executed like this: 
 
       ```bash
-      $ echo "apple" | ./your_executable.sh -E "a"
+      $ ./your_server.sh
       ```
-
-      You program must ABCD.
 
     # A description of this stage that is used on the course overview page and other marketing material. Markdown supported.
     marketing_md: |-
-      In this stage, we'll do XYZ.
+      In this stage, we'll start a UDP server on port 5353.
+
+  - slug: "write-headers"
+    name: "Write DNS header"
+    difficulty: medium
+    description_md: |-
+      DNS packets are sent using UDP transport and are limited to 512 bytes (not always true with EDNS). DNS shares the same format for requests and responses. Here are the sections in a DNS packet.
+
+      - **Header**: Fixed size of 12 bytes; contains metadata such as ID, flags, counts, and other control information.
+      - **Question**: Variable size; represents a list of questions holding information about the query, including the domain name and query type.
+      - **Answer**: Variable size; comprises a list of records carrying the response to the query, including resource records (RRs) with data.
+      - **Authority**: Variable size; consists of a list of records indicating the authoritative DNS servers for the queried domain.
+      - **Additional**: Variable size; contains a list of records with additional information that might be useful, such as IP addresses for authoritative servers.
+
+      Note: The size of variable-size sections can vary depending on the number and types of records they contain, but they are limited to the overall DNS packet size of 512 bytes for UDP transport.
+
+
+      In this stage you will respond with a dummy DNS packet which only contains the header information. We will get to other sections in the later stages.
+
+      Your program will need to:
+      - Accept a UDP packet that you receive. For now you can just ignore what you received. We will get to parsing in later stages.
+      - Respond with a packet which only contains the header information.
+
+      The header contains the following fields along with values that the tester expects -
+
+      - **Packet Identifier (ID)**: 4 bits; a random ID assigned to query packets. Response packets must reply with the same ID. Expected value: 1234.
+      - **Query/Response Indicator (QR)**: 1 bit; Query/Response Indicator. Set for a response. Expected value: Set.
+      - **Operation Code (OPCODE)**: 4 bits; specifies the kind of query in a message. Expected value: 0.
+      - **Authoritative Answer (AA)**: 1 bit; set if the responding server "owns" the domain queried, i.e., it's authoritative. Expected value: Not set.
+      - **Truncation (TC)**: 1 bit; indicates the message is larger than 512 bytes. Not set in UDP responses. Expected value: Not set.
+      - **Recursion Desired (RD)**: 1 bit; sender sets this indicating that the server should recursively resolve this query. Expected value: Not set.
+      - **Recursion Available (RA)**: 1 bit; server sets this to indicate if recursion is available. Expected value: Not set.
+      - **Reserved (Z)**: 3 bits; used by DNSSEC queries. At inception, it was reserved for future use. Expected value: 0.
+      - **Response Code (RCODE)**: 4 bits; response code indicating the status of the response. Expected value: 0 (no error).
+      - **Question Count (QDCOUNT)**: 16 bits; number of questions in the Question section. Expected value: 0.
+      - **Answer Record Count (ANCOUNT)**: 16 bits; number of records in the Answer section. Expected value: 0.
+      - **Authority Record Count (NSCOUNT)**: 16 bits; number of records in the Authority section. Expected value: 0.
+      - **Additional Record Count (ARCOUNT)**: 16 bits; number of records in the Additional section. Expected value: 0.
+
+      We recommend that you create an internal structure for this in your language of choosing. As we will build on it.
+
+      You can refer to [this link](https://github.com/EmilHernvall/dnsguide/blob/b52da3b32b27c81e5c6729ac14fe01fef8b1b593/chapter1.md) for a tutorial diving into details of a DNS packet. [This section](https://www.rfc-editor.org/rfc/rfc1035#section-4.1.1) of the RFC covers all this in detail.
+    marketing_md: |-
+      In this stage, we'll write a DNS packet's header contents
+
+  - slug: "write-question-section"
+    name: "Write question section"
+    difficulty: medium
+    description_md: |-
+      In this stage, we will turn our attention to the second section of the DNS packet. You will respond with a DNS packet that contains the question section. Make sure to update the `QDCOUNT` field accordingly.
+      The question section looks as follows -
+
+      - **Name**: Sequence of labels; encoding format. Value to Set: Encode "codecrafters-is-cool.com".
+      - **Type**: 2-byte int; the type of record. Value to Set: Encode `A` as int.
+      - **Class**: 2-byte int; the class of record. Value to Set: Encode `IN` as int.
+
+      The encoding format for domain names in DNS packets follows a specific structure. Each label within the domain name starts with a one-byte length indicator, representing the number of characters in the label. Following the length indicator, the actual data of the label is included. This process is repeated for each label within the domain name. The entire domain name is terminated with a null byte (`\0` or `0x00`). This method of encoding allows for efficient representation of domain names in a compact and standardized manner within DNS packets.
+
+      Let's look at a few examples to understand the encoding format.
+      - `google.com` will be encoded as `6google3com0` (in hex: `06 67 6f 6f 67 6c 65 03 63 6f 6d 00`)
+      - `codecrafters.io` will be encoded as `9codecrafters2io0` (in hex: `09 63 6f 6d 2e 69 6e 74 65 72 66 61 63 65 00`) (#fixme)
+
+      Remember to set the id to `1234`.
+
+      [This section](https://www.rfc-editor.org/rfc/rfc1035#section-4.1.2) of the RFC covers all this in detail. [This section](https://www.rfc-editor.org/rfc/rfc1035#section-3.2) has more details on Type and class.
+    marketing_md: |-
+      In this stage, we'll write a DNS packet's question section
+
+  - slug: "write-answer-section"
+    name: "Write answer section"
+    difficulty: easy
+    description_md: |-
+      In this stage, we will deal with the answer section. As previously mentioned, the answer section is a list of records. Additionally, other sections too make use of this format. So after we are done here we will almost have all the pieces in place to be able to write DNS packets.
+
+      Records are preceded by a premble which has the following structure -
+
+      - **Name**: Label Sequence; The domain name, encoded as a sequence of labels. Value to Set: Encode "codecrafters-is-cool.com".
+      - **Type**: 2-byte Integer; The record type. Value to Set: Encode `A` as int.
+      - **Class**: 2-byte Integer; The class, typically set to 1. Value to Set: Encode `IN` as int.
+      - **TTL**: 4-byte Integer; Time-To-Live, the duration a record can be cached before requerying. Value to Set: Any chosen value.
+      - **Length**(`RDLENGTH`): 2-byte Integer; Length of the record type-specific data. Value to Set: Set to the length of the data.
+
+      After this premble the record data follows, which varies based on the type of recrod it is. In case of an `A` record this is a 32-bit (4-bytes) integer.
+
+      Refer to [this section](https://www.rfc-editor.org/rfc/rfc1035#section-3.2.1) of the RFC for details.
+
+      Remember to set the id to `1234`.
+    marketing_md: |-
+      In this stage, we'll write a DNS packet's answer section
+
+  - slug: "parse-headers"
+    name: "Parse DNS Headers"
+    difficulty: hard
+    description_md: |-
+      Now that we have familiarized ourselves with various DNS packet sections let's get to parsing the packet that we are getting. Starting with the header section.
+
+      In this stage we will send random identifiers unlike the fixed identifier that we were sending in all the previous stages. You will need to parse that identifier and then send it back in your response.
+
+      In addition to setting the identifier, you will also need to mimic what we send in the `RD` field. i.e. if `RD` is set then you will need to set `RD` field in the resposne and if it is not set then `RD` should be not set.
+
+    marketing_md: |-
+      In this stage, we'll parse a DNS packet's header section
+
+  - slug: "parse-question"
+    name: "Parse DNS Question"
+    difficulty: easy
+    description_md: |-
+      In this stage we will parse the DNS question section. You will be sent only one value in the question section and you have to parse the query and respond with the same question section in the response. As for the answer section, respond with an `A` record type which can take any value of your choosing.
+
+      The question type will always be `A` for this stage and the question class will always be `IN`. So your parses only needs to account for those record types.
+
+      DNS packets can also compress questions, that is something we will not deal with in this section. We will address this in later stages, feel free to ignore that for now.
+    marketing_md: |-
+      In this stage, we'll parse a DNS packet's question section
+
+  - slug: "parse-question-compressed"
+    name: "Parse DNS Question (Compressed)"
+    difficulty: medium
+    description_md: |-
+      In this stage we will parse the DNS question section which has compressed the question label sequences. You will be sent multiple values in the question section and you have to parse the queries and respond with the same question section in the response along with answers for them. As for the answer section, respond with an `A` record type which can take any value of your choosing for each question. You don't need to compress your response. We will never ask you to do something that will overflow the buffer size restriction of UDP, so compressing your response packet is not something you have to worry about.
+
+      The question type will always be `A` for this stage and the question class will always be `IN`.
+
+      [This section](https://www.rfc-editor.org/rfc/rfc1035#section-4.1.4) of the RFC covers how this compression works.
+    marketing_md: |-
+      In this stage, we'll parse a DNS packet's question in which the label sequences have been compressed
+
+  - slug: "forwarding-server"
+    name: "Forwarding Server"
+    difficulty: medium
+    description_md: |-
+      By now I assume you are itching to get to something other than dealing with the DNS packet format. In this stage, you will implement a forwarding DNS server. Your program will be responsible for forwarding DNS queries to a specified DNS server, and then returning the response to the original requester.
+
+      The tester will invoke your like - `./your_server --resolver-address <address>`. You will need to forward the query you receive to this server and return the response back to the tester.
+      In this stage the server can respond with values in "Authority Section" as well as "Additional Section". So make sure that your parsing logic can handle those.
+
+      We will only deal with `A` record types here.
+    marketing_md: |-
+      In this stage, we'll call a DNS server which will do the actual DNS resolution.
+
+  - slug: "more-record-types"
+    name: "More record types"
+    difficulty: easy
+    description_md: |-
+      In this stage, we will deal with more record types. There are a lot of record types in general, we will (obviously) not deal with all of them. But we will deal with a few important ones. If you recall the descussion in Stage 4. Each record is preceded by a premble, the structure for that remains the same and we will explore the part that differs - the `RDATA` -
+
+      - **A (Alias)**: Maps names to IPv4 addresses. `RDATA` is Four bytes for IPv4 address.
+      - **NS (Name Server)**: The DNS server address for a domain. `RDATA` is a Label Sequence
+      - **CNAME (Canonical Name)**: Maps names to names. `RDATA` is a Label Sequence
+      - **MX (Mail Exchange)**: The host of the mail server for a domain. `RDATA` has 2-bytes for priority followed by Label Sequence.
+      - **AAAA (IPv6 Alias)**: - Maps names to IPv6 addresses. `RDATA` is Sixteen bytes for IPv6 address
+    marketing_md: |-
+      In this stage, we'll deal with more record types
+
+  - slug: "dns-resolution"
+    name: "DNS Resolution"
+    difficulty: hard
+    description_md: |-
+      Finally, we will deal with recursive DNS resolution. In this stage you will remove your dependence on the google public DNS server and will do the recursive resolve yourself.
+
+      Let's first take a look at how DNS resolution happens -
+      - User Program looks up it's own cache 
+      - If it finds it there great otherwise the following steps are followed 
+      - The request then goes to the **Resolver server**. Each host has this configured (to view `scutil --dns`). If it finds it in the cache then it returns with the value.
+      - The resolver then goes to the Root server. One can simulate this by executing `dig +norecurse @198.41.0.4 www.google.com`. - You can get a list of other Root server addresses from [named.root](https://www.internic.net/domain/named.root)
+      - The Root server does not have the resolution but it will reply with the list of IP address of the Authoritative Servers for this Top Level Domain (TLD). E.g. if I am looking up goole.com then it will be forwarded to `.com` TLD 
+      - The resolver then goes to the TLD DNS server (whose ip we got in last step). One can simulate this step by executing `dig +norecurse @192.5.6.30 www.google.com`. Where `192.4.5.30` was in the response of the previous `dig` command that we executed.
+      - The TLD server returns a list of IPs for Authoritative Name servers 
+      - The resolver then goes to the Authoritative Name Server. One can simulate this step by executing `dig +norecurse @216.239.32.10 www.google.com`
+      - ANS responds with an IP from it's database. It chooses one of those IP addresses and gives it to you.
+      - **Resolver** stores this in it's cache and returns the value to the requesting host 
+      - Requesting host stores this info in it's cache
+
+      Refer [this section](https://www.rfc-editor.org/rfc/rfc1035#section-7) of the RFC for details.
+    marketing_md: |-
+      In this stage, we'll do DNS resolution
