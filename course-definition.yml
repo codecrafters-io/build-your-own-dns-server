@@ -4,7 +4,7 @@ slug: "dns-server"
 
 # The name of your course. This will be displayed in the course catalog, and on other course pages.
 # Example: "Build your own Redis"
-name: "Build your own dns"
+name: "Build your own DNS server"
 
 # A short name for your course, this'll be used in copy like emails.
 # Example: "Redis"
@@ -44,7 +44,7 @@ description_md: |-
 #
 # **TODO**: Remove _md suffix since markdown isn't supported
 short_description_md: |-
-  Learn about DNS protocol, record types, recursive resolve, forwarding servers and more.
+  Learn about the DNS protocol, record types, recursive resolve, forwarding servers and more.
 
 # The percentage of users who complete your course. We'll calculate this automatically in the future, safe to ignore for now.
 completion_percentage: 15
@@ -115,7 +115,7 @@ stages:
 
       The [User Datagram Protocol (UDP)](https://en.wikipedia.org/wiki/User_Datagram_Protocol) is one of the core communication protocols of the Internet protocol suite used to send messages (transported as datagrams in packets) to other hosts on an [Internet Protocol (IP)](https://en.wikipedia.org/wiki/Internet_Protocol) network.
 
-      Your program will be executed like this: 
+      Your program will be executed like this:
 
       ```bash
       $ ./your_server.sh
@@ -284,16 +284,16 @@ stages:
       Finally, we will deal with recursive DNS resolution. In this stage you will remove your dependence on the google public DNS server and will do the recursive resolve yourself.
 
       Let's first take a look at how DNS resolution happens -
-      - User Program looks up it's own cache 
-      - If it finds it there great otherwise the following steps are followed 
+      - User Program looks up it's own cache
+      - If it finds it there great otherwise the following steps are followed
       - The request then goes to the **Resolver server**. Each host has this configured (to view `scutil --dns`). If it finds it in the cache then it returns with the value.
       - The resolver then goes to the Root server. One can simulate this by executing `dig +norecurse @198.41.0.4 www.google.com`. - You can get a list of other Root server addresses from [named.root](https://www.internic.net/domain/named.root)
-      - The Root server does not have the resolution but it will reply with the list of IP address of the Authoritative Servers for this Top Level Domain (TLD). E.g. if I am looking up goole.com then it will be forwarded to `.com` TLD 
+      - The Root server does not have the resolution but it will reply with the list of IP address of the Authoritative Servers for this Top Level Domain (TLD). E.g. if I am looking up goole.com then it will be forwarded to `.com` TLD
       - The resolver then goes to the TLD DNS server (whose ip we got in last step). One can simulate this step by executing `dig +norecurse @192.5.6.30 www.google.com`. Where `192.4.5.30` was in the response of the previous `dig` command that we executed.
-      - The TLD server returns a list of IPs for Authoritative Name servers 
+      - The TLD server returns a list of IPs for Authoritative Name servers
       - The resolver then goes to the Authoritative Name Server. One can simulate this step by executing `dig +norecurse @216.239.32.10 www.google.com`
       - ANS responds with an IP from it's database. It chooses one of those IP addresses and gives it to you.
-      - **Resolver** stores this in it's cache and returns the value to the requesting host 
+      - **Resolver** stores this in it's cache and returns the value to the requesting host
       - Requesting host stores this info in it's cache
 
       Refer [this section](https://www.rfc-editor.org/rfc/rfc1035#section-7) of the RFC for details.
