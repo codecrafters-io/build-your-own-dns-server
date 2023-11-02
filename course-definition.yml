@@ -238,18 +238,6 @@ stages:
     marketing_md: |-
       In this stage, we'll parse a DNS packet's question section
 
-  - slug: "parse-question-compressed"
-    name: "Parse DNS Question (Compressed)"
-    difficulty: medium
-    description_md: |-
-      In this stage we will parse the DNS question section which has compressed the question label sequences. You will be sent multiple values in the question section and you have to parse the queries and respond with the same question section in the response along with answers for them. As for the answer section, respond with an `A` record type which can take any value of your choosing for each question. You don't need to compress your response. We will never ask you to do something that will overflow the buffer size restriction of UDP, so compressing your response packet is not something you have to worry about.
-
-      The question type will always be `A` for this stage and the question class will always be `IN`.
-
-      [This section](https://www.rfc-editor.org/rfc/rfc1035#section-4.1.4) of the RFC covers how this compression works.
-    marketing_md: |-
-      In this stage, we'll parse a DNS packet's question in which the label sequences have been compressed
-
   - slug: "forwarding-server"
     name: "Forwarding Server"
     difficulty: medium
@@ -276,6 +264,18 @@ stages:
       - **AAAA (IPv6 Alias)**: - Maps names to IPv6 addresses. `RDATA` is Sixteen bytes for IPv6 address
     marketing_md: |-
       In this stage, we'll deal with more record types
+
+  - slug: "parse-compressed-packet"
+    name: "Parse DNS Question (Compressed)"
+    difficulty: medium
+    description_md: |-
+      In this stage we will parse the DNS question section which has compressed the question label sequences. You will be sent multiple values in the question section and you have to parse the queries and respond with the same question section in the response along with answers for them. As for the answer section, respond with an `A` record type which can take any value of your choosing for each question. You don't need to compress your response. We will never ask you to do something that will overflow the buffer size restriction of UDP, so compressing your response packet is not something you have to worry about.
+
+      The question type will always be `A` for this stage and the question class will always be `IN`.
+
+      [This section](https://www.rfc-editor.org/rfc/rfc1035#section-4.1.4) of the RFC covers how this compression works.
+    marketing_md: |-
+      In this stage, we'll parse a DNS packet's question in which the label sequences have been compressed
 
   - slug: "dns-resolution"
     name: "DNS Resolution"
