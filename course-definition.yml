@@ -186,7 +186,7 @@ stages:
       ### Question section structure
 
       The question section contains a list of questions (usually just 1) that the sender wants to ask the receiver. This section is present
-      in both query and response packets.
+      in both query and reply packets.
 
       Each question has the following structure:
 
