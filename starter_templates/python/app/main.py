@@ -1,32 +1,25 @@
-import sys
-
-# import pyparsing - available if you need it!
-# import lark - available if you need it!
-
-
-def match_pattern(input_line, pattern):
-    if len(pattern) == 1:
-        return pattern in input_line
-    else:
-        raise RuntimeError(f"Unhandled pattern: {pattern}")
+import socket
 
 
 def main():
-    pattern = sys.argv[2]
-    input_line = sys.stdin.read()
-
-    if sys.argv[1] != "-E":
-        print("Expected first argument to be '-E'")
-        exit(1)
-
     # You can use print statements as follows for debugging, they'll be visible when running tests.
     print("Logs from your program will appear here!")
 
     # Uncomment this block to pass the first stage
-    # if match_pattern(input_line, pattern):
-    #     exit(0)
-    # else:
-    #     exit(1)
+    #
+    # udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    # udp_socket.bind(("127.0.0.1", 2053))
+    #
+    # while True:
+    #     try:
+    #         buf, source = udp_socket.recvfrom(512)
+    #
+    #         response = b""
+    #
+    #         udp_socket.sendto(response, source)
+    #     except Exception as e:
+    #         print(f"Error receiving data: {e}")
+    #         break
 
 
 if __name__ == "__main__":

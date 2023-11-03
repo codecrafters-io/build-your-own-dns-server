@@ -1,8 +1,9 @@
-# build-your-own-<fill_in_course_slug>
+# build-your-own-dns-server
 
-Content for the "<fill_in_course_name>" challenge
+Content for the "Build Your Own DNS Server" challenge
 
 ## Setup
 
-This challenge is developed using https://github.com/codecrafters-io/course-sdk. Read the README there for information
+This challenge is developed using <https://github.com/codecrafters-io/course-sdk>. Read the README there for information
 on how to contribute language support & submit solutions.
+
