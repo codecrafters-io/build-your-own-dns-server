@@ -181,7 +181,7 @@ stages:
     name: "Write question section"
     difficulty: medium
     description_md: |-
-      In this stage, you'll extend your DNS server to respond with the "question" section, which is the second section of a DNS message.
+      In this stage, you'll extend your DNS server to respond with the "question" section, the second section of a DNS message.
 
       ### Question section structure
 
