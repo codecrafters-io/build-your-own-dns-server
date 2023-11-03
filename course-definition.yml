@@ -181,39 +181,66 @@ stages:
     name: "Write question section"
     difficulty: medium
     description_md: |-
-      In this stage, we will turn our attention to the second section of the DNS packet, the question section. You will respond with a DNS packet that contains the question section.
+      In this stage, you'll extend your DNS server to respond with the "question" section, which is the second section of a DNS message.
 
-      ## Question section structure
-      The question section looks as follows -
+      ### Question section structure
 
-      - **Name**: Sequence of labels; encoding format
+      The question section contains a list of questions (usually just 1) that the sender wants to ask the receiver. This section is present
+      in both query and response packets.
+
+      Each question has the following structure:
+
+      - **Name**: A domain name, represented as a sequence of "labels" (more on this below)
       - **Type**: 2-byte int; the type of record
-      - **Class**: 2-byte int; the class of record
+        - 1 for an A record
+        - 5 for a CNAME record
+        - ... and so on (full list [here](https://www.rfc-editor.org/rfc/rfc1035#section-3.2.2))
+      - **Class**: 2-byte int; usually set to `1` (full list [here](https://www.rfc-editor.org/rfc/rfc1035#section-3.2.4))
 
-      ## Label sequence
+      [Section 4.1.2](https://www.rfc-editor.org/rfc/rfc1035#section-4.1.2) of the RFC covers the question section format in
+      detail. [Section 3.2](https://www.rfc-editor.org/rfc/rfc1035#section-3.2) has more details on Type and class.
 
-      The encoding format for domain names in DNS packets follows a specific structure. Each label within the domain name starts with a one-byte length indicator, representing the number of characters in the label. Following the length indicator, the actual data of the label is included. This process is repeated for each label within the domain name. The entire domain name is terminated with a null byte (`\0` or `0x00`). This method of encoding allows for efficient representation of domain names in a compact and standardized manner within DNS packets.
+      ### Label sequence
 
-      ### Examples
+      Domain names in DNS packets are encoded as a sequence of labels. Here's what that looks like:
 
-      Let's look at a few examples to understand the encoding format.
-      - `google.com` will be encoded as `6google3com0` (in hex: `06 67 6f 6f 67 6c 65 03 63 6f 6d 00`)
-      - `codecrafters.io` will be encoded as `9codecrafters2io0` (in hex: `09 63 6f 6d 2e 69 6e 74 65 72 66 61 63 65 00`) (#fixme)
+      - `google.com` is encoded as `6google3com\0` (in hex: `06 67 6f 6f 67 6c 65 03 63 6f 6d 00`)
+        - `6google` is the first label
+          - `6` is the length of the label
+          - `google` is the content of the label
+        - `3com` is the second label
+          - `3` is the length of the label
+          - `com` is the content of the label
+        - `\0` is the null byte that terminates the domain name
+      - `codecrafters.io` is encoded as `9codecrafters2io\0` (in hex: `09 63 6F 64 65 63 72 61 66 74 65 72 73 02 69 6F 00`)
+        - `9codecrafters` is the first label
+          - `9` is the length of the label
+          - `codecrafters` is the content of the label
+        - `2io` is the second label
+          - `2` is the length of the label
+          - `io` is the content of the label
+        - `\0` is the null byte that terminates the domain name
 
-      ## What we will do in this stage?
+      ---
 
-      To pass this stage you will respond with a DNS packet which in addition to a dummy header section also contains a dummy question section with the following details.
+      Just like in the previous stage, the tester will execute your program like this:
 
-      | Field | Expected value |
-      | ----- | -------------- |
-      | Name | `codecrafters-is-cool.com` encoded as a label sequence |
-      | Type | `A` encoded as a 2-byte int |
-      | Class | `IN` encoded as a 2-byte int |
+      ```bash
+      ./your_server.sh
+      ```
 
-      Make sure to update the `QDCOUNT` field accordingly.
-      Remember to set the id to `1234`.
+      It'll then send a UDP packet (containing a DNS query) to port 2053. Your program will need to respond with a
+      DNS reply packet that contains the question section described above (along with the header section from the previous stage).
 
-      [This section](https://www.rfc-editor.org/rfc/rfc1035#section-4.1.2) of the RFC covers all this in detail. [This section](https://www.rfc-editor.org/rfc/rfc1035#section-3.2) has more details on Type and class.
+      Here are the expected values for the question section:
+
+      | Field | Description | Expected value                                                                                         |
+      | ----- | -------------------------------------------------------------------------------------------------------------------- |
+      | Name  | `20codecrafters-is-cool3com` followed by a null byte (that's `codecrafters-is-cool.com` encoded as a label sequence) |
+      | Type  | 1 encoded as a 2-byte int (corresponding to the "A" record type)                                                     |
+      | Class | 1 encoded as a 2-byte int (corresponding to the "IN" record class)                                                   |
+
+      Make sure to update the `QDCOUNT` field in the header section accordingly, and remember to set the id to `1234`.
     marketing_md: |-
       In this stage, we'll write a DNS packet's question section
 
