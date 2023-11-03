@@ -228,11 +228,11 @@ stages:
 
       Here are the expected values for the question section:
 
-      | Field | Description | Expected value                                                                                              |
-      | ----- | ------------------------------------------------------------------------------------------------------------------------- |
-      | Name  | `\x14codecrafters-is-cool\x03com` followed by a null byte (that's `codecrafters-is-cool.com` encoded as a label sequence) |
-      | Type  | 1 encoded as a 2-byte big-endian int (corresponding to the "A" record type)                                               |
-      | Class | 1 encoded as a 2-byte big-endian int (corresponding to the "IN" record class)                                             |
+      | Field | Description | Expected value                                                                            |
+      | ----- | ------------------------------------------------------------------------------------------------------- |
+      | Name  | `\x0ccodecrafters\x02io` followed by a null byte (that's `codecrafters.io` encoded as a label sequence) |
+      | Type  | 1 encoded as a 2-byte big-endian int (corresponding to the "A" record type)                             |
+      | Class | 1 encoded as a 2-byte big-endian int (corresponding to the "IN" record class)                           |
 
       Make sure to update the `QDCOUNT` field in the header section accordingly, and remember to set the id to `1234`.
     marketing_md: |-
