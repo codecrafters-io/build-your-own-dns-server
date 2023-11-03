@@ -209,9 +209,9 @@ stages:
             - `3` is the length of the label
             - `com` is the content of the label
         - `\0` is the null byte that terminates the domain name
-      - `codecrafters.io` is encoded as `9codecrafters2io\0` (in hex: `09 63 6F 64 65 63 72 61 66 74 65 72 73 02 69 6F 00`)
-        - `9codecrafters` is the first label
-            - `9` is the length of the label
+      - `codecrafters.io` is encoded as `12codecrafters2io\0` (in hex: `0C 63 6F 64 65 63 72 61 66 74 65 72 73 02 69 6F 00`)
+        - `12codecrafters` is the first label
+            - `12` is the length of the label
             - `codecrafters` is the content of the label
         - `2io` is the second label
             - `2` is the length of the label
