@@ -111,7 +111,7 @@ stages:
 
     # The instructions for your stage. Markdown supported. Shown on the course page.
     description_md: |-
-      In this stage, let's start by setting a UDP server that can receive and respond to UDP packets on port 2053.
+      In this stage, we'll setup a UDP server that can receive and respond to UDP packets on port 2053.
 
       The tester will execute your program like this:
 
