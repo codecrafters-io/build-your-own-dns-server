@@ -197,7 +197,7 @@ stages:
       [Section 4.1.2](https://www.rfc-editor.org/rfc/rfc1035#section-4.1.2) of the RFC covers the question section format in
       detail. [Section 3.2](https://www.rfc-editor.org/rfc/rfc1035#section-3.2) has more details on Type and class.
 
-      ### Label sequence
+      ### Domain name encoding
 
       Domain names in DNS packets are encoded as a sequence of labels.
 
