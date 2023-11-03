@@ -228,7 +228,7 @@ stages:
 
       Here are the expected values for the question section:
 
-      | Field | Description | Expected value                                                                            |
+      | Field | Expected value                                                                                          |
       | ----- | ------------------------------------------------------------------------------------------------------- |
       | Name  | `\x0ccodecrafters\x02io` followed by a null byte (that's `codecrafters.io` encoded as a label sequence) |
       | Type  | 1 encoded as a 2-byte big-endian int (corresponding to the "A" record type)                             |
