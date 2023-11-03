@@ -199,9 +199,9 @@ stages:
 
       ### Domain name encoding
 
-      Domain names in DNS packets are encoded as a sequence of labels.
+      Domain names in DNS packets are encoded as a sequence of labels. 
 
-      Labels are formatted as `<length><content>`, where `<length>` is a single byte that specifies the length of the label,
+      Labels are encoded as `<length><content>`, where `<length>` is a single byte that specifies the length of the label,
       and `<content>` is the actual content of the label. The sequence of labels is terminated by a null byte (`\x00`).
 
       For example:
