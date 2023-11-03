@@ -111,6 +111,10 @@ stages:
 
     # The instructions for your stage. Markdown supported. Shown on the course page.
     description_md: |-
+      [DNS (the Domain Name System)](https://en.wikipedia.org/wiki/Domain_Name_System) is the backbone of the internet and is a hierarchical and distributed naming system for computers, services, and other resources in the Internet. Most prominently it turns human-readable domain names like www.example.com into numerical IP addresses that computers understand.
+
+      We will build a recursive DNS server piece-by-piece in this challenge. To start first thing we need to know is that DNS in it's original formulation uses UDP to send data back and forth, so we will start by building a UDP server which can respond to UDP datagrams.
+
       In this stage, we'll start a UDP server on port 2053 which will respond with at least an empty packet every time it receives a request.
 
       The [User Datagram Protocol (UDP)](https://en.wikipedia.org/wiki/User_Datagram_Protocol) is one of the core communication protocols of the Internet protocol suite used to send messages (transported as datagrams in packets) to other hosts on an [Internet Protocol (IP)](https://en.wikipedia.org/wiki/Internet_Protocol) network.
@@ -129,6 +133,10 @@ stages:
     name: "Write DNS header"
     difficulty: medium
     description_md: |-
+      As with any protocol we need to understand the packet structure that we are dealing with. Initial few stages will focus on writing and reading a DNS packet.
+
+      ## DNS packet format
+
       DNS packets are sent using UDP transport and are limited to 512 bytes (not always true with EDNS). DNS shares the same format for requests and responses. Here are the sections in a DNS packet.
 
       - **Header**: Fixed size of 12 bytes; contains metadata such as ID, flags, counts, and other control information.
@@ -139,12 +147,15 @@ stages:
 
       Note: The size of variable-size sections can vary depending on the number and types of records they contain, but they are limited to the overall DNS packet size of 512 bytes for UDP transport.
 
+      ## What we will do in this stage?
 
       In this stage you will respond with a dummy DNS packet which only contains the header information. We will get to other sections in the later stages.
 
       Your program will need to:
       - Accept a UDP packet that you receive. For now you can just ignore what you received. We will get to parsing in later stages.
       - Respond with a packet which only contains the header information.
+
+      ## DNS header structure
 
       The header contains the following fields along with values that the tester expects -
 
@@ -172,19 +183,36 @@ stages:
     name: "Write question section"
     difficulty: medium
     description_md: |-
-      In this stage, we will turn our attention to the second section of the DNS packet. You will respond with a DNS packet that contains the question section. Make sure to update the `QDCOUNT` field accordingly.
+      In this stage, we will turn our attention to the second section of the DNS packet, the question section. You will respond with a DNS packet that contains the question section.
+
+      ## Question section structure
       The question section looks as follows -
 
-      - **Name**: Sequence of labels; encoding format. Value to Set: Encode "codecrafters-is-cool.com".
-      - **Type**: 2-byte int; the type of record. Value to Set: Encode `A` as int.
-      - **Class**: 2-byte int; the class of record. Value to Set: Encode `IN` as int.
+      - **Name**: Sequence of labels; encoding format
+      - **Type**: 2-byte int; the type of record
+      - **Class**: 2-byte int; the class of record
+
+      ## Label sequence
 
       The encoding format for domain names in DNS packets follows a specific structure. Each label within the domain name starts with a one-byte length indicator, representing the number of characters in the label. Following the length indicator, the actual data of the label is included. This process is repeated for each label within the domain name. The entire domain name is terminated with a null byte (`\0` or `0x00`). This method of encoding allows for efficient representation of domain names in a compact and standardized manner within DNS packets.
 
+      ### Examples
+ 
       Let's look at a few examples to understand the encoding format.
       - `google.com` will be encoded as `6google3com0` (in hex: `06 67 6f 6f 67 6c 65 03 63 6f 6d 00`)
       - `codecrafters.io` will be encoded as `9codecrafters2io0` (in hex: `09 63 6f 6d 2e 69 6e 74 65 72 66 61 63 65 00`) (#fixme)
 
+      ## What we will do in this stage?
+      
+      To pass this stage you will respond with a DNS packet which in addition to a dummy header section also contains a dummy question section with the following details.
+
+      | Field | Expected value |
+      | ----- | -------------- |
+      | Name | `codecrafters-is-cool.com` encoded as a label sequence |
+      | Type | `A` encoded as a 2-byte int |
+      | Class | `IN` encoded as a 2-byte int |
+
+      Make sure to update the `QDCOUNT` field accordingly.
       Remember to set the id to `1234`.
 
       [This section](https://www.rfc-editor.org/rfc/rfc1035#section-4.1.2) of the RFC covers all this in detail. [This section](https://www.rfc-editor.org/rfc/rfc1035#section-3.2) has more details on Type and class.
@@ -197,6 +225,8 @@ stages:
     description_md: |-
       In this stage, we will deal with the answer section. As previously mentioned, the answer section is a list of records. Additionally, other sections too make use of this format. So after we are done here we will almost have all the pieces in place to be able to write DNS packets.
 
+      ## Answer section structure
+
       Records are preceded by a premble which has the following structure -
 
       - **Name**: Label Sequence; The domain name, encoded as a sequence of labels. Value to Set: Encode "codecrafters-is-cool.com".
@@ -208,6 +238,19 @@ stages:
       After this premble the record data follows, which varies based on the type of recrod it is. In case of an `A` record this is a 32-bit (4-bytes) integer.
 
       Refer to [this section](https://www.rfc-editor.org/rfc/rfc1035#section-3.2.1) of the RFC for details.
+
+      ## What we will do in this stage?
+
+      To pass this stage you will respond with a DNS packet which in addition to a dummy header and dummy question section also contains a dummy answer section with the following details.
+
+      | Field | Expected Value |
+      | --- | --- |
+      | Name | `codecrafters-is-cool.com` encoded as a label sequence |
+      | Type | `A` encoded as a 2-byte int |
+      | Class | `IN` encoded as a 2-byte int |
+      | TTL | Any chosen value |
+      | Length | Set to the length of the data |
+      | Data | 32-bit (4-bytes) integer |
 
       Remember to set the id to `1234`.
     marketing_md: |-
