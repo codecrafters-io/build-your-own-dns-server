@@ -131,49 +131,51 @@ stages:
     name: "Write DNS header"
     difficulty: medium
     description_md: |-
-      As with any protocol we need to understand the packet structure that we are dealing with. Initial few stages will focus on writing and reading a DNS packet.
+      All communications in the DNS protocol are carried in a single format called a "message". Each message consists of
+      5 sections: header, question, answer, authority, and an additional space.
 
-      ## DNS packet format
+      In this stage, we'll focus on the "header" section. We'll look at the other sections in later stages.
 
-      DNS packets are sent using UDP transport and are limited to 512 bytes (not always true with EDNS). DNS shares the same format for requests and responses. Here are the sections in a DNS packet.
+      ### Header section structure
 
-      - **Header**: Fixed size of 12 bytes; contains metadata such as ID, flags, counts, and other control information.
-      - **Question**: Variable size; represents a list of questions holding information about the query, including the domain name and query type.
-      - **Answer**: Variable size; comprises a list of records carrying the response to the query, including resource records (RRs) with data.
-      - **Authority**: Variable size; consists of a list of records indicating the authoritative DNS servers for the queried domain.
-      - **Additional**: Variable size; contains a list of records with additional information that might be useful, such as IP addresses for authoritative servers.
+      The header section of a DNS message contains the following fields: (we've also included the values that the tester expects in this stage)
 
-      Note: The size of variable-size sections can vary depending on the number and types of records they contain, but they are limited to the overall DNS packet size of 512 bytes for UDP transport.
+      | Field                             | Size    | Description                                                                                                      |
+      | ----------------------------------| ------- | ---------------------------------------------------------------------------------------------------------------- |
+      | Packet Identifier (ID)            | 4 bits  | A random ID assigned to query packets. Response packets must reply with the same ID. **Expected value**: 1234.   |
+      | Query/Response Indicator (QR)     | 1 bit   | 1 for a reply packet, 0 for a question packet. **Expected value**: 1.                                            |
+      | Operation Code (OPCODE)           | 4 bits  | Specifies the kind of query in a message. **Expected value**: 0.                                                 |
+      | Authoritative Answer (AA)         | 1 bit   | 1 if the responding server "owns" the domain queried, i.e., it's authoritative. **Expected value**: 0.           |
+      | Truncation (TC)                   | 1 bit   | 1 if the message is larger than 512 bytes. Always 0 in UDP responses. **Expected value**: 0.                     |
+      | Recursion Desired (RD)            | 1 bit   | Sender sets this to 1 if the server should recursively resolve this query, 0 otherwise. **Expected value**: 0.   |
+      | Recursion Available (RA)          | 1 bit   | Server sets this to 1 to indicate that recursion is available. **Expected value**: 0.                            |
+      | Reserved (Z)                      | 3 bits  | Used by DNSSEC queries. At inception, it was reserved for future use. **Expected value**: 0.                     |
+      | Response Code (RCODE)             | 4 bits  | Response code indicating the status of the response. **Expected value**: 0 (no error).                           |
+      | Question Count (QDCOUNT)          | 16 bits | Number of questions in the Question section. **Expected value**: 0.                                              |
+      | Answer Record Count (ANCOUNT)     | 16 bits | Number of records in the Answer section. **Expected value**: 0.                                                  |
+      | Authority Record Count (NSCOUNT)  | 16 bits | Number of records in the Authority section. **Expected value**: 0.                                               |
+      | Additional Record Count (ARCOUNT) | 16 bits | Number of records in the Additional section. **Expected value**: 0.                                              |
 
-      ## What we will do in this stage?
+      The header section is always 12 bytes long. Integers are encoded in big-endian format.
 
-      In this stage you will respond with a dummy DNS packet which only contains the header information. We will get to other sections in the later stages.
+      You can read more about the full DNS packet format on [Wikipedia](https://en.wikipedia.org/wiki/Domain_Name_System#DNS_message_format), or
+      in [RFC 1035](https://tools.ietf.org/html/rfc1035#section-4.1).
 
-      Your program will need to:
-      - Accept a UDP packet that you receive. For now you can just ignore what you received. We will get to parsing in later stages.
-      - Respond with a packet which only contains the header information.
+      [This link](https://github.com/EmilHernvall/dnsguide/blob/b52da3b32b27c81e5c6729ac14fe01fef8b1b593/chapter1.md) is a good tutorial that walks
+      through the DNS packet format in detail.
 
-      ## DNS header structure
+      ---
 
-      The header contains the following fields along with values that the tester expects -
+      Just like in the previous stage, the tester will execute your program like this:
 
-      - **Packet Identifier (ID)**: 4 bits; a random ID assigned to query packets. Response packets must reply with the same ID. Expected value: 1234.
-      - **Query/Response Indicator (QR)**: 1 bit; Query/Response Indicator. Set for a response. Expected value: Set.
-      - **Operation Code (OPCODE)**: 4 bits; specifies the kind of query in a message. Expected value: 0.
-      - **Authoritative Answer (AA)**: 1 bit; set if the responding server "owns" the domain queried, i.e., it's authoritative. Expected value: Not set.
-      - **Truncation (TC)**: 1 bit; indicates the message is larger than 512 bytes. Not set in UDP responses. Expected value: Not set.
-      - **Recursion Desired (RD)**: 1 bit; sender sets this indicating that the server should recursively resolve this query. Expected value: Not set.
-      - **Recursion Available (RA)**: 1 bit; server sets this to indicate if recursion is available. Expected value: Not set.
-      - **Reserved (Z)**: 3 bits; used by DNSSEC queries. At inception, it was reserved for future use. Expected value: 0.
-      - **Response Code (RCODE)**: 4 bits; response code indicating the status of the response. Expected value: 0 (no error).
-      - **Question Count (QDCOUNT)**: 16 bits; number of questions in the Question section. Expected value: 0.
-      - **Answer Record Count (ANCOUNT)**: 16 bits; number of records in the Answer section. Expected value: 0.
-      - **Authority Record Count (NSCOUNT)**: 16 bits; number of records in the Authority section. Expected value: 0.
-      - **Additional Record Count (ARCOUNT)**: 16 bits; number of records in the Additional section. Expected value: 0.
+      ```bash
+      ./your_server.sh
+      ```
 
-      We recommend that you create an internal structure for this in your language of choosing. As we will build on it.
+      It'll then send a UDP packet (containing a DNS query) to port 2053. Your program will need to respond with
+      a DNS reply packet that contains the header information described above.
 
-      You can refer to [this link](https://github.com/EmilHernvall/dnsguide/blob/b52da3b32b27c81e5c6729ac14fe01fef8b1b593/chapter1.md) for a tutorial diving into details of a DNS packet. [This section](https://www.rfc-editor.org/rfc/rfc1035#section-4.1.1) of the RFC covers all this in detail.
+      We recommend creating an internal structure for a "DNS message" in your code, as we will build on this in later stages.
     marketing_md: |-
       In this stage, we'll write a DNS packet's header contents
 
