@@ -214,14 +214,6 @@ stages:
             - `\x03` is a single byte, which is the length of the label
             - `com` is the content of the label
         - `\x00` is the null byte that terminates the domain name
-      - `codecrafters.io` is encoded as `\x0ccodecrafters\x02io\x00` (in hex: `0C 63 6F 64 65 63 72 61 66 74 65 72 73 02 69 6F 00`)
-        - `\x0ccodecrafters` is the first label
-            - `\x0c` is a single byte, which is the length of the label
-            - `codecrafters` is the content of the label
-        - `\x02io` is the second label
-            - `\x02` is a single byte, which is the length of the label
-            - `io` is the content of the label
-        - `\x00` is the null byte that terminates the domain name
 
       ---
 
