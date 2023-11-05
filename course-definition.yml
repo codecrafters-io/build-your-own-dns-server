@@ -242,21 +242,24 @@ stages:
     name: "Write answer section"
     difficulty: easy
     description_md: |-
-      In this stage, we will deal with the answer section. As previously mentioned, the answer section is a list of records. Additionally, other sections too make use of this format. So after we are done here we will almost have all the pieces in place to be able to write DNS packets.
+      In this stage, you'll extend your DNS server to respond with the "answer" section, the third section of a DNS message.
 
-      ## Answer section structure
+      ### Answer section structure
 
-      Records are preceded by a premble which has the following structure -
+      The answer section contains a list of RRs (Resource Records) that answer the questions asked in the question section.
 
-      - **Name**: Label Sequence; The domain name, encoded as a sequence of labels. Value to Set: Encode "codecrafters-is-cool.com".
-      - **Type**: 2-byte Integer; The record type. Value to Set: Encode `A` as int.
-      - **Class**: 2-byte Integer; The class, typically set to 1. Value to Set: Encode `IN` as int.
-      - **TTL**: 4-byte Integer; Time-To-Live, the duration a record can be cached before requerying. Value to Set: Any chosen value.
-      - **Length**(`RDLENGTH`): 2-byte Integer; Length of the record type-specific data. Value to Set: Set to the length of the data.
+      Each RR has the following structure:
 
-      After this premble the record data follows, which varies based on the type of recrod it is. In case of an `A` record this is a 32-bit (4-bytes) integer.
+      | Field                 | Description                                                                                                          |
+      | --------------------- | ------------------------------------------------------------------------------------------------                     |
+      | Name                  | Label Sequence; The domain name, encoded as a sequence of labels. Value to Set: Encode "codecrafters.io".            |
+      | Type                  | 2-byte Integer; The record type. Value to Set: Encode `A` as int.                                                    |
+      | Class                 | 2-byte Integer; The class, typically set to 1. Value to Set: Encode `IN` as int.                                     |
+      | TTL                   | 4-byte Integer; Time-To-Live, the duration a record can be cached before requerying. Value to Set: Any chosen value. |
+      | Length (`RDLENGTH`)   | 2-byte Integer; Length of the record type-specific data. Value to Set: Set to the length of the data.                |
+      | Data (`RDATA`)        | Variable length; Record type-specific data. Value to Set: 4-byte integer.                                            |
 
-      Refer to [this section](https://www.rfc-editor.org/rfc/rfc1035#section-3.2.1) of the RFC for details.
+      [Section 3.2.1](https://www.rfc-editor.org/rfc/rfc1035#section-3.2.1) of the RFC covers the answer section format in detail.
 
       ## What we will do in this stage?
 
