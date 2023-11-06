@@ -299,12 +299,24 @@ stages:
     name: "Parse DNS Headers"
     difficulty: hard
     description_md: |-
-      Now that we have familiarized ourselves with various DNS packet sections let's get to parsing the packet that we are getting. Starting with the header section.
+      Up until now, we were ignoring the contents of the DNS packet that we received and hardcoding `1234` as the ID in the response.
 
-      In this stage we will send random identifiers unlike the fixed identifier that we were sending in all the previous stages. You will need to parse that identifier and then send it back in your response.
+      In this stage, you'll have to parse the DNS packet that you receive, and respond with the same ID in the response.
 
-      In addition to setting the identifier, you will also need to mimic what we send in the `RD` field. i.e. if `RD` is set then you will need to set `RD` field in the resposne and if it is not set then `RD` should be not set.
+      ---
 
+      The tester will execute your program like this:
+
+      ```bash
+      ./your_server.sh
+      ```
+
+      It'll then send a UDP packet (containing a DNS query) to port 2053.
+
+      Unlike the previous stages, the tester will now send a random ID in the DNS packet. Your program will need to parse the ID from the packet
+      and respond with the same ID in the response.
+
+      In addition to setting the ID, you will also need to mimic the value sent in the RD field. If RD is `1` then you will need to respond with RD as `1` in the response as well.
     marketing_md: |-
       In this stage, we'll parse a DNS packet's header section
 
