@@ -299,9 +299,8 @@ stages:
     name: "Parse DNS Headers"
     difficulty: hard
     description_md: |-
-      Up until now, we were ignoring the contents of the DNS packet that we received and hardcoding `1234` as the ID in the response.
-
-      In this stage, you'll have to parse the DNS packet that you receive, and respond with the same ID in the response.
+      Up until now, we were ignoring the contents of the DNS packet that we received and hardcoding `1234` as the ID in the response. In
+      this stage, you'll have to parse the DNS packet that you receive and respond with the same ID in the response.
 
       The tester will execute your program like this:
 
