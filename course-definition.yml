@@ -303,8 +303,6 @@ stages:
 
       In this stage, you'll have to parse the DNS packet that you receive, and respond with the same ID in the response.
 
-      ---
-
       The tester will execute your program like this:
 
       ```bash
