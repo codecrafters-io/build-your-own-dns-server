@@ -365,6 +365,9 @@ stages:
       Your program will need to respond with a DNS reply packet that contains:
       - a header section (same as in stage #5)
       - a question section (**new in this stage**) with the following details
+      - an answer section (**new in this stage**)
+
+      Details of the question section
 
       | Field  | Expected value                                                                  |
       | ------ | --------------------------                                                      |
@@ -372,7 +375,16 @@ stages:
       | Type   | `1` encoded as a 2-byte big-endian int (corresponding to the "A" record type)   |
       | Class  | `1` encoded as a 2-byte big-endian int (corresponding to the "IN" record class) |
 
-      The tester will not really care about what follows the question section as long as the whole thing is valid DNS packet.
+      Details of the answer section
+
+      | Field   | Expected Value                                                                                                                     |
+      | ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+      | Name    | Mimic the domain name (as label sequence)                                                                                          |
+      | Type    | `1` encoded as a 2-byte big-endian int (corresponding to the "A" record type)                                                      |
+      | Class   | `1` encoded as a 2-byte big-endian int (corresponding to the "IN" record class)                                                    |
+      | TTL     | Any value, encoded as a 4-byte big-endian int. For example: `60`.                                                                  |
+      | Length  | `4`, encoded as a 2-byte big-endian int (corresponds to the length of the RDATA field)                                             |
+      | Data    | Any IP address, encoded as a 4-byte big-endian int. For example: `\x08\x08\x08\x08` (that's `8.8.8.8` encoded as a 4-byte integer) |
 
     marketing_md: |-
       In this stage, we'll parse a DNS packet's question section
