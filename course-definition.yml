@@ -142,7 +142,7 @@ stages:
 
       | Field                             | Size    | Description                                                                                                            |
       | ----------------------------------| ------- | ---------------------------------------------------------------------------------------------------------------------- |
-      | Packet Identifier (ID)            | 4 bits  | A random ID assigned to query packets. Response packets must reply with the same ID. <br />**Expected value**: 1234.   |
+      | Packet Identifier (ID)            | 16 bits | A random ID assigned to query packets. Response packets must reply with the same ID. <br />**Expected value**: 1234.   |
       | Query/Response Indicator (QR)     | 1 bit   | 1 for a reply packet, 0 for a question packet. <br />**Expected value**: 1.                                            |
       | Operation Code (OPCODE)           | 4 bits  | Specifies the kind of query in a message. <br />**Expected value**: 0.                                                 |
       | Authoritative Answer (AA)         | 1 bit   | 1 if the responding server "owns" the domain queried, i.e., it's authoritative. <br />**Expected value**: 0.           |
@@ -299,10 +299,11 @@ stages:
     name: "Parse header section"
     difficulty: hard
     description_md: |-
-      Up until now, we were ignoring the contents of the DNS packet that we received and hardcoding `1234` as the ID in the response. In
-      this stage, you'll have to parse the DNS packet that you receive and respond with the same ID in the response.
+      So far you've focused on writing a DNS packet. In this a next few stages you'll extend your DNS server to parse the DNS message that the client is sending you starting with parsing the header section. Remember Stage 2 covers the header seciton in detail.
 
-      The tester will execute your program like this:
+      ---
+
+      Just like the previous stage, the tester will execute your program like this:
 
       ```bash
       ./your_server.sh
@@ -310,10 +311,28 @@ stages:
 
       It'll then send a UDP packet (containing a DNS query) to port 2053.
 
-      Unlike the previous stages, the tester will now send a random ID in the DNS packet. Your program will need to parse the ID from the packet
-      and respond with the same ID in the response.
+      Your program will need to respond with a DNS reply packet that contains:
 
-      In addition to setting the ID, you will also need to mimic the value sent in the RD field. If RD is `1` then you will need to respond with RD as `1` in the response as well.
+      - a header section with the following values
+
+      | Field                              | Size    | Expected value                                                              |
+      | ---------------------------------- | ------- | --------------------------------------------------------------------------- |
+      | Packet Identifier (ID)             | 16 bits | Mimic the 16 bit packet identifier from the request packet sent by tester   |
+      | Query/Response Indicator (QR)      | 1 bit   | 1                                                                           |
+      | Operation Code (OPCODE)            | 4 bits  | Mimic the OPCODE value sent by the tester                                   |
+      | Authoritative Answer (AA)          | 1 bit   | 0                                                                           |
+      | Truncation (TC)                    | 1 bit   | 0                                                                           |
+      | Recursion Desired (RD)             | 1 bit   | Mimic the RD value sent by the tester                                       |
+      | Recursion Available (RA)           | 1 bit   | 0                                                                           |
+      | Reserved (Z)                       | 3 bits  | 0                                                                           |
+      | Response Code (RCODE)              | 4 bits  | 0 (no error) if OPCODE is 0 (standard query) else 4 (not implemented)       |
+      | Question Count (QDCOUNT)           | 16 bits | Any valid value                                                             |
+      | Answer Record Count (ANCOUNT)      | 16 bits | Any valid value                                                             |
+      | Authority Record Count (NSCOUNT)   | 16 bits | Any valid value                                                             |
+      | Additional Record Count (ARCOUNT)  | 16 bits | Any valid value                                                             |
+
+      The tester will not really care about what follows the header section as long as it is a valid DNS packet.
+
     marketing_md: |-
       In this stage, we'll parse a DNS packet's header section
 
@@ -321,11 +340,40 @@ stages:
     name: "Parse question section"
     difficulty: easy
     description_md: |-
-      In this stage we will parse the DNS question section. You will be sent only one value in the question section and you have to parse the query and respond with the same question section in the response. As for the answer section, respond with an `A` record type which can take any value of your choosing.
+      In this stage you'll extend your DNS server to parse the question section of a DNS message. Remember stage-3 covers the question section in detail, which will give you all the info on how to parse the question section.
 
-      The question type will always be `A` for this stage and the question class will always be `IN`. So your parses only needs to account for those record types.
+      ---
 
-      DNS packets can also compress questions, that is something we will not deal with in this section. We will address this in later stages, feel free to ignore that for now.
+      Just like the previous stage, the tester will execute your program like this:
+
+      ```bash
+      ./your_server.sh
+      ```
+
+      It'll then send a UDP packet (containing a DNS query) to port 2053. Whose question section will be as follows
+
+      | Field  | Value sent by the tester                                                        |
+      | ------ | --------------------------                                                      |
+      | Name   | A random domiain encoded as a label sequence (refer to stage #3 for details)    |
+      | Type   | `1` encoded as a 2-byte big-endian int (corresponding to the "A" record type)   |
+      | Class  | `1` encoded as a 2-byte big-endian int (corresponding to the "IN" record class) |
+
+      The question type will always be `A` for this stage and the question class will always be `IN`. So your parser only needs to account for those record types for now.
+
+      Reading through the RFC you will realise that DNS packets can also compress domain names, that is something we will not deal with in this section. We will address this in later stages, feel free to ignore that for now. The tester will not send you compressed domain names at least in this stage.
+
+      Your program will need to respond with a DNS reply packet that contains:
+      - a header section (same as in stage #5)
+      - a question section (**new in this stage**) with the following details
+
+      | Field  | Expected value                                                                  |
+      | ------ | --------------------------                                                      |
+      | Name   | Mimic the domain name (as label sequence)                                       |
+      | Type   | `1` encoded as a 2-byte big-endian int (corresponding to the "A" record type)   |
+      | Class  | `1` encoded as a 2-byte big-endian int (corresponding to the "IN" record class) |
+
+      The tester will not really care about what follows the question section as long as the whole thing is valid DNS packet.
+
     marketing_md: |-
       In this stage, we'll parse a DNS packet's question section
 
@@ -333,12 +381,33 @@ stages:
     name: "Forwarding Server"
     difficulty: medium
     description_md: |-
-      By now I assume you are itching to get to something other than dealing with the DNS packet format. In this stage, you will implement a forwarding DNS server. Your program will be responsible for forwarding DNS queries to a specified DNS server, and then returning the response to the original requester.
+      By now I assume you are itching to get to something other than dealing with the DNS packet format. In this stage, you will implement a forwarding DNS server.
 
-      The tester will invoke your like - `./your_server --resolver-address <address>`. You will need to forward the query you receive to this server and return the response back to the tester.
-      In this stage the server can respond with values in "Authority Section" as well as "Additional Section". So make sure that your parsing logic can handle those.
+      A forwarding DNS server, also known as a DNS forwarder, is a DNS server that is configured to pass DNS queries it receives from clients to another DNS server for resolution. Instead of directly resolving DNS queries by looking up the information in its own local cache or authoritative records.
 
-      We will only deal with `A` record types here.
+      ---
+      In this stage the tester will execute your program like this:
+
+      ```bash
+      ./your_server --resolver-address <address>
+      ```
+      * <address> where will be of the form `<ip>:<port>`
+
+      It'll then send a UDP packet (containing a DNS query) to port 2053. Your program will be responsible for forwarding DNS queries to a specified DNS server, and then returning the response to the original requester (i.e. the tester).
+
+      Your program will need to respond with a DNS reply packet that contains:
+      - a header section (same as in stage #5)
+      - a question section (same as in stage #6)
+      - an answer section (new in this stage) mimicing what you received from the DNS server to which you forwarded the request.
+
+      Here are a few assumptions you can make about the tester -
+      * It will always send you queries for `A` record type. So your parsing logic only needs to take care of this.
+
+      Here are few assumptions you can make about the DNS server you are forwarding the requests to -
+      * It will always respond with an answer section for the queries that originate from the tester.
+      * It will not contain other sections like (authority seciton and additional section)
+
+      Remember to mimic the packet identifier value sent by the tester in your response.
     marketing_md: |-
       In this stage, we'll call a DNS server which will do the actual DNS resolution.
 
