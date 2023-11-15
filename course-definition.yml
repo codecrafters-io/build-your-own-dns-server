@@ -299,9 +299,9 @@ stages:
     name: "Parse header section"
     difficulty: hard
     description_md: |-
-      So far you've focused on writing a DNS packet. In this a next few stages you'll extend your DNS server to parse the DNS message that the client is sending you starting with parsing the header section. Remember Stage 2 covers the header seciton in detail.
-
-      ---
+      Up until now, we were ignoring the contents of the DNS packet that we received and hardcoding `1234` as the ID in the response. In
+      this stage, you'll have to parse the DNS packet that you receive and respond with the same ID in the response. You'll also need to some
+      other fields in the header section.
 
       Just like the previous stage, the tester will execute your program like this:
 
@@ -311,9 +311,7 @@ stages:
 
       It'll then send a UDP packet (containing a DNS query) to port 2053.
 
-      Your program will need to respond with a DNS reply packet that contains:
-
-      - a header section with the following values
+      Your program will need to respond with a DNS reply packet that contains a header section with the following values:
 
       | Field                              | Size    | Expected value                                                              |
       | ---------------------------------- | ------- | --------------------------------------------------------------------------- |
@@ -331,8 +329,7 @@ stages:
       | Authority Record Count (NSCOUNT)   | 16 bits | Any valid value                                                             |
       | Additional Record Count (ARCOUNT)  | 16 bits | Any valid value                                                             |
 
-      The tester will not really care about what follows the header section as long as it is a valid DNS packet.
-
+      The tester will not check what follows the header section as long as it is a valid DNS packet.
     marketing_md: |-
       In this stage, we'll parse a DNS packet's header section
 
