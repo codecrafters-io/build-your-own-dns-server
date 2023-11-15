@@ -388,20 +388,18 @@ stages:
 
       | Field  | Value sent by the tester                                                        |
       | ------ | --------------------------                                                      |
-      | Name   | A random domiain encoded as a label sequence (refer to stage #3 for details)    |
+      | Name   | A random domain encoded as a label sequence (refer to stage #3 for details)    |
       | Type   | `1` encoded as a 2-byte big-endian int (corresponding to the "A" record type)   |
       | Class  | `1` encoded as a 2-byte big-endian int (corresponding to the "IN" record class) |
 
       The question type will always be `A` for this stage and the question class will always be `IN`. So your parser only needs to account for those record types for now.
 
-      Reading through the RFC you will realise that DNS packets can also compress domain names, that is something we will not deal with in this section. We will address this in later stages, feel free to ignore that for now. The tester will not send you compressed domain names at least in this stage.
-
       Your program will need to respond with a DNS reply packet that contains:
       - a header section (same as in stage #5)
-      - a question section (**new in this stage**) with the following details
+      - a question section (**new in this stage**)
       - an answer section (**new in this stage**)
 
-      Details of the question section
+      Expected values for the question section:
 
       | Field  | Expected value                                                                  |
       | ------ | --------------------------                                                      |
@@ -409,7 +407,7 @@ stages:
       | Type   | `1` encoded as a 2-byte big-endian int (corresponding to the "A" record type)   |
       | Class  | `1` encoded as a 2-byte big-endian int (corresponding to the "IN" record class) |
 
-      Details of the answer section
+      Expected values for the answer section:
 
       | Field   | Expected Value                                                                                                                     |
       | ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
