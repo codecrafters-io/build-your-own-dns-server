@@ -391,7 +391,7 @@ stages:
       - a question section (**new in this stage**)
       - an answer section (**new in this stage**)
 
-      Expected values for the question section:
+      **Expected values for the question section**:
 
       | Field  | Expected value                                                                  |
       | ------ | --------------------------                                                      |
@@ -399,7 +399,7 @@ stages:
       | Type   | `1` encoded as a 2-byte big-endian int (corresponding to the "A" record type)   |
       | Class  | `1` encoded as a 2-byte big-endian int (corresponding to the "IN" record class) |
 
-      Expected values for the answer section:
+      **Expected values for the answer section**:
 
       | Field   | Expected Value                                                                                                                     |
       | ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
