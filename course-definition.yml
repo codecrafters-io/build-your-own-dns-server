@@ -339,33 +339,6 @@ stages:
     description_md: |-
       In this stage you'll extend your DNS server to parse the question section of the DNS message you receive.
 
-      We looked at the structure of the question section in stage 3. Here it is again for reference:
-
-      ### Question section structure
-
-      The question section contains a list of questions (usually just 1) that the sender wants to ask the receiver. This section is present
-      in both query and reply packets.
-
-      Each question has the following structure:
-
-      - **Name**: A domain name, represented as a sequence of "labels" (more on this below)
-      - **Type**: 2-byte int; the type of record (1 for an A record, 5 for a CNAME record etc., full list [here](https://www.rfc-editor.org/rfc/rfc1035#section-3.2.2))
-      - **Class**: 2-byte int; usually set to `1` (full list [here](https://www.rfc-editor.org/rfc/rfc1035#section-3.2.4))
-
-      [Section 4.1.2](https://www.rfc-editor.org/rfc/rfc1035#section-4.1.2) of the RFC covers the question section format in
-      detail. [Section 3.2](https://www.rfc-editor.org/rfc/rfc1035#section-3.2) has more details on Type and class.
-
-      ### Domain name encoding
-
-      Domain names in DNS packets are encoded as a sequence of labels.
-
-      Labels are encoded as `<length><content>`, where `<length>` is a single byte that specifies the length of the label,
-      and `<content>` is the actual content of the label. The sequence of labels is terminated by a null byte (`\x00`).
-
-      View stage #3 for a detailed example.
-
-      ---
-
       Just like the previous stage, the tester will execute your program like this:
 
       ```bash
