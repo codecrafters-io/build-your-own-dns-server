@@ -300,8 +300,8 @@ stages:
     difficulty: hard
     description_md: |-
       Up until now, we were ignoring the contents of the DNS packet that we received and hardcoding `1234` as the ID in the response. In
-      this stage, you'll have to parse the DNS packet that you receive and respond with the same ID in the response. You'll also need to some
-      other fields in the header section.
+      this stage, you'll have to parse the DNS packet that you receive and respond with the same ID in the response. You'll also need to set
+      some other fields in the header section.
 
       Just like the previous stage, the tester will execute your program like this:
 
