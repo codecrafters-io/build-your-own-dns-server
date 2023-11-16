@@ -383,11 +383,23 @@ stages:
     marketing_md: |-
       In this stage, we'll parse a DNS packet's question section
 
+  - slug: "parse-compressed-packet"
+    name: "Parse compressed packet"
+    difficulty: medium
+    description_md: |-
+      In this stage we will parse the DNS question section which has compressed the question label sequences. You will be sent multiple values in the question section and you have to parse the queries and respond with the same question section in the response along with answers for them. As for the answer section, respond with an `A` record type which can take any value of your choosing for each question. You don't need to compress your response. We will never ask you to do something that will overflow the buffer size restriction of UDP, so compressing your response packet is not something you have to worry about.
+
+      The question type will always be `A` and the question class will always be `IN`.
+
+      [This section](https://www.rfc-editor.org/rfc/rfc1035#section-4.1.4) of the RFC covers how this compression works.
+    marketing_md: |-
+      In this stage, we'll parse a DNS packet's question in which the label sequences have been compressed
+
   - slug: "forwarding-server"
     name: "Forwarding Server"
     difficulty: medium
     description_md: |-
-      By now I assume you are itching to get to something other than dealing with the DNS packet format. In this stage, you will implement a forwarding DNS server.
+      In this stage, you will implement a forwarding DNS server.
 
       A forwarding DNS server, also known as a DNS forwarder, is a DNS server that is configured to pass DNS queries it receives from clients to another DNS server for resolution. Instead of directly resolving DNS queries by looking up the information in its own local cache or authoritative records.
 
@@ -412,56 +424,9 @@ stages:
       Here are few assumptions you can make about the DNS server you are forwarding the requests to -
       * It will always respond with an answer section for the queries that originate from the tester.
       * It will not contain other sections like (authority seciton and additional section)
+      * It will only respond when there is only one question in the question section. If you send multiple questions in the question section, it will not respond at all. So when you receive multiple questions in the question section you will need to split it into two DNS packets and then send them to this resolver then merge the response in a single packet.
 
       Remember to mimic the packet identifier value sent by the tester in your response.
     marketing_md: |-
       In this stage, we'll call a DNS server which will do the actual DNS resolution.
 
-  - slug: "more-record-types"
-    name: "More record types"
-    difficulty: easy
-    description_md: |-
-      In this stage, we will deal with more record types. There are a lot of record types in general, we will (obviously) not deal with all of them. But we will deal with a few important ones. If you recall the descussion in Stage 4. Each record is preceded by a premble, the structure for that remains the same and we will explore the part that differs - the `RDATA` -
-
-      - **A (Alias)**: Maps names to IPv4 addresses. `RDATA` is Four bytes for IPv4 address.
-      - **NS (Name Server)**: The DNS server address for a domain. `RDATA` is a Label Sequence
-      - **CNAME (Canonical Name)**: Maps names to names. `RDATA` is a Label Sequence
-      - **MX (Mail Exchange)**: The host of the mail server for a domain. `RDATA` has 2-bytes for priority followed by Label Sequence.
-      - **AAAA (IPv6 Alias)**: - Maps names to IPv6 addresses. `RDATA` is Sixteen bytes for IPv6 address
-    marketing_md: |-
-      In this stage, we'll deal with more record types
-
-  - slug: "parse-compressed-packet"
-    name: "Parse DNS Question (Compressed)"
-    difficulty: medium
-    description_md: |-
-      In this stage we will parse the DNS question section which has compressed the question label sequences. You will be sent multiple values in the question section and you have to parse the queries and respond with the same question section in the response along with answers for them. As for the answer section, respond with an `A` record type which can take any value of your choosing for each question. You don't need to compress your response. We will never ask you to do something that will overflow the buffer size restriction of UDP, so compressing your response packet is not something you have to worry about.
-
-      The question type will always be `A` for this stage and the question class will always be `IN`.
-
-      [This section](https://www.rfc-editor.org/rfc/rfc1035#section-4.1.4) of the RFC covers how this compression works.
-    marketing_md: |-
-      In this stage, we'll parse a DNS packet's question in which the label sequences have been compressed
-
-  - slug: "dns-resolution"
-    name: "DNS Resolution"
-    difficulty: hard
-    description_md: |-
-      Finally, we will deal with recursive DNS resolution. In this stage you will remove your dependence on the google public DNS server and will do the recursive resolve yourself.
-
-      Let's first take a look at how DNS resolution happens -
-      - User Program looks up it's own cache
-      - If it finds it there great otherwise the following steps are followed
-      - The request then goes to the **Resolver server**. Each host has this configured (to view `scutil --dns`). If it finds it in the cache then it returns with the value.
-      - The resolver then goes to the Root server. One can simulate this by executing `dig +norecurse @198.41.0.4 www.google.com`. - You can get a list of other Root server addresses from [named.root](https://www.internic.net/domain/named.root)
-      - The Root server does not have the resolution but it will reply with the list of IP address of the Authoritative Servers for this Top Level Domain (TLD). E.g. if I am looking up goole.com then it will be forwarded to `.com` TLD
-      - The resolver then goes to the TLD DNS server (whose ip we got in last step). One can simulate this step by executing `dig +norecurse @192.5.6.30 www.google.com`. Where `192.4.5.30` was in the response of the previous `dig` command that we executed.
-      - The TLD server returns a list of IPs for Authoritative Name servers
-      - The resolver then goes to the Authoritative Name Server. One can simulate this step by executing `dig +norecurse @216.239.32.10 www.google.com`
-      - ANS responds with an IP from it's database. It chooses one of those IP addresses and gives it to you.
-      - **Resolver** stores this in it's cache and returns the value to the requesting host
-      - Requesting host stores this info in it's cache
-
-      Refer [this section](https://www.rfc-editor.org/rfc/rfc1035#section-7) of the RFC for details.
-    marketing_md: |-
-      In this stage, we'll do DNS resolution
