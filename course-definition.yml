@@ -30,7 +30,7 @@ release_status: "beta"
 # > In this challenge, you'll build a toy Redis clone that's capable of handling basic commands like PING, GET
 # > and SET. Along the way, we'll learn about event loops, the Redis Protocol and more.
 description_md: |-
-  In this challenge, you'll build a DNS server that's capable of parsing and creating DNS packets, responding to DNS queries, handling various record types and doing recursive resolve. Along the way we'll learn about the DNS protocol, DNS packet format, root servers, authoritative servers, forwarding servers, various record types (A, AAAA, CNAME, etc) and more.
+  In this challenge, you'll build a DNS server that's capable of responding to basic DNS queries. Along the way we'll learn about the DNS protocol, DNS packet format, root servers, authoritative servers, forwarding servers, various record types (A, AAAA, CNAME, etc) and more.
 
 # This is shown on the catalog. Plaintext only, recommended length ~10 words.
 #
@@ -44,7 +44,7 @@ description_md: |-
 #
 # **TODO**: Remove _md suffix since markdown isn't supported
 short_description_md: |-
-  Learn about the DNS protocol, record types, recursive resolve, forwarding servers and more.
+  Learn about the DNS protocol, DNS record types and more.
 
 # The percentage of users who complete your course. We'll calculate this automatically in the future, safe to ignore for now.
 completion_percentage: 15
