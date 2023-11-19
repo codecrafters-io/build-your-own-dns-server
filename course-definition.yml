@@ -54,6 +54,8 @@ languages:
   - slug: "go"
   - slug: "python"
   - slug: "rust"
+  - slug: "java"
+    release_status: "beta"
 
 marketing:
   # Shown in the catalog.
