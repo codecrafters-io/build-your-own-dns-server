@@ -13,7 +13,7 @@ public class Main {
         System.out.println("Received " + new String(buf) + " from " + serverSocket.getInetAddress());
 
         final byte[] bufResponse = new byte[512];
-        final DatagramPacket packetResponse = new DatagramPacket(bufResponse, bufResponse.length);
+        final DatagramPacket packetResponse = new DatagramPacket(bufResponse, bufResponse.length, packet.getSocketAddress());
         serverSocket.send(packetResponse);
       } catch (IOException e) {
         System.out.println("IOException: " + e.getMessage());
