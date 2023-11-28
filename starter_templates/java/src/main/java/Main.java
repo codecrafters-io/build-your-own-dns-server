@@ -9,8 +9,8 @@ public class Main {
 
     // Uncomment this block to pass the first stage
     //
-    // while(true) {
-    //   try(DatagramSocket serverSocket = new DatagramSocket(2053)) {
+    // try(DatagramSocket serverSocket = new DatagramSocket(2053)) {
+    //   while(true) {
     //     final byte[] buf = new byte[512];
     //     final DatagramPacket packet = new DatagramPacket(buf, buf.length);
     //     serverSocket.receive(packet);
@@ -19,9 +19,9 @@ public class Main {
     //     final byte[] bufResponse = new byte[512];
     //     final DatagramPacket packetResponse = new DatagramPacket(bufResponse, bufResponse.length, packet.getSocketAddress());
     //     serverSocket.send(packetResponse);
-    //   } catch (IOException e) {
-    //     System.out.println("IOException: " + e.getMessage());
     //   }
+    // } catch (IOException e) {
+    //     System.out.println("IOException: " + e.getMessage());
     // }
   }
 }
