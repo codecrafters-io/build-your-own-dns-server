@@ -413,7 +413,7 @@ stages:
       ```bash
       ./your_server --resolver <address>
       ```
-      * <address> where will be of the form `<ip>:<port>`
+      * where <address> will be of the form `<ip>:<port>`
 
       It'll then send a UDP packet (containing a DNS query) to port 2053. Your program will be responsible for forwarding DNS queries to a specified DNS server, and then returning the response to the original requester (i.e. the tester).
 
@@ -433,4 +433,3 @@ stages:
       Remember to mimic the packet identifier value sent by the tester in your response.
     marketing_md: |-
       In this stage, we'll call a DNS server which will do the actual DNS resolution.
-
