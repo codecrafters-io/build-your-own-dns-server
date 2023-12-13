@@ -56,6 +56,12 @@ languages:
   - slug: "rust"
   - slug: "java"
     release_status: "beta"
+  - slug: "c"
+    release_status: "beta"
+  - slug: "cpp"
+    release_status: "beta"
+  - slug: "csharp"
+    release_status: "beta"
 
 marketing:
   # Shown in the catalog.
