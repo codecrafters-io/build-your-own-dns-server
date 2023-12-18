@@ -15,7 +15,6 @@ let mut buf = [0; 512];
 loop {
     match udp_socket.recv_from(&mut buf) {
         Ok((size, source)) => {
-            let _received_data = String::from_utf8_lossy(&buf[0..size]);
             println!("Received {} bytes from {}", size, source);
             let response = [];
             udp_socket
