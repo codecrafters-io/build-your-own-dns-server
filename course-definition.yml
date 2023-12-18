@@ -62,6 +62,8 @@ languages:
     release_status: "beta"
   - slug: "csharp"
     release_status: "beta"
+  - slug: "javascript"
+    release_status: "beta"
 
 marketing:
   # Shown in the catalog.
