@@ -1,4 +1,4 @@
-@@ -1,28 +1,23 @@
+@@ -1,27 +1,22 @@
 -// Uncomment this block to pass the first stage
 -// use std::net::UdpSocket;
 +use std::net::UdpSocket;
@@ -16,7 +16,6 @@
 -    // loop {
 -    //     match udp_socket.recv_from(&mut buf) {
 -    //         Ok((size, source)) => {
--    //             let _received_data = String::from_utf8_lossy(&buf[0..size]);
 -    //             println!("Received {} bytes from {}", size, source);
 -    //             let response = [];
 -    //             udp_socket
@@ -32,7 +31,6 @@
 +    loop {
 +        match udp_socket.recv_from(&mut buf) {
 +            Ok((size, source)) => {
-+                let _received_data = String::from_utf8_lossy(&buf[0..size]);
 +                println!("Received {} bytes from {}", size, source);
 +                let response = [];
 +                udp_socket
