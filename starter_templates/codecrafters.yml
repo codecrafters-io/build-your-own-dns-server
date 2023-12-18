@@ -35,3 +35,7 @@ language_pack: java-21
 # Available versions: dotnet-6.0
 language_pack: dotnet-6.0
 {{/language_is_csharp}}
+{{# language_is_javascript }}
+# Available versions: nodejs-18
+language_pack: nodejs-18
+{{/ language_is_javascript }}
