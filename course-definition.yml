@@ -439,7 +439,7 @@ stages:
 
       Here are few assumptions you can make about the DNS server you are forwarding the requests to -
       * It will always respond with an answer section for the queries that originate from the tester.
-      * It will not contain other sections like (authority seciton and additional section)
+      * It will not contain other sections like (authority section and additional section)
       * It will only respond when there is only one question in the question section. If you send multiple questions in the question section, it will not respond at all. So when you receive multiple questions in the question section you will need to split it into two DNS packets and then send them to this resolver then merge the response in a single packet.
 
       Remember to mimic the packet identifier value sent by the tester in your response.
