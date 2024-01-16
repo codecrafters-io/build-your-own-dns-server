@@ -184,6 +184,8 @@ stages:
       a DNS reply packet that contains the header information described above.
 
       We recommend creating an internal structure for a "DNS message" in your code, as we will build on this in later stages.
+
+      Note: The tester sends an extra packet at the start of testing each stage. You can ignore it.
     marketing_md: |-
       In this stage, we'll write a DNS packet's header contents
 
