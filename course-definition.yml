@@ -19,18 +19,25 @@ short_name: "dns"
 # Allowed values: "alpha", "beta", "live"
 release_status: "live"
 
-# This is shown on the course overview page. Markdown supported, recommended length ~30 words.
+# This is shown on the course overview page. Markdown supported, recommended length ~40 words.
 #
 # Recommended format:
 #
-# > In this challenge, you'll build ABC that's capable of D, E, F and G. Along the way, we'll learn about X, Y, Z and more.
+# > ABC is <whatever>. In this challenge, you'll build your own ABC that's capable of D, E, F and G.
+# >
+# > Along the way, we'll learn about X, Y, Z and more.
 #
 # Example:
 #
-# > In this challenge, you'll build a toy Redis clone that's capable of handling basic commands like PING, GET
-# > and SET. Along the way, we'll learn about event loops, the Redis Protocol and more.
+# > Redis is an in-memory data structure store often used as a database, cache, message broken and streaming engine. In this challenge
+# > you'll build your own Redis server that is capable of serving basic commands, reading RDB files and more.
+# >
+# > Along the way, you'll learn about TCP servers, the Redis Protocol and more.
 description_md: |-
-  In this challenge, you'll build a DNS server that's capable of responding to basic DNS queries. Along the way we'll learn about the DNS protocol, DNS packet format, forwarding servers, A record types, UDP and more.
+  DNS is a protocol used to resolve domain names to IP addresses. In this challenge, you'll build a DNS server that's capable of responding to
+  basic DNS queries.
+
+  Along the way you'll learn about the DNS protocol, DNS packet format, DNS record types, UDP servers and more.
 
 # This is shown on the catalog. Plaintext only, recommended length ~10 words.
 #
