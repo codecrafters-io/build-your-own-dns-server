@@ -350,7 +350,7 @@ stages:
 
       The tester will not check what follows the header section as long as it is a valid DNS packet.
 
-      **Note**: You code will still need to pass tests for the previous stages. You shouldn't need to hardcode `1234` as the request ID anymore
+      **Note**: Your code will still need to pass tests for the previous stages. You shouldn't need to hardcode `1234` as the request ID anymore
       since the tester sends `1234` as the ID in the previous stages. As long as you implement this stage correctly, your code should automatically pass
       the previous stages as well.
     marketing_md: |-
