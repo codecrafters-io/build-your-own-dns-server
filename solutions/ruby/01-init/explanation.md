@@ -7,9 +7,9 @@ Study and uncomment the relevant code:
 
 loop do
   begin
-    buf, source = udp_socket.recvfrom(512)
+    data, (_, sender_port, _, sender_ip) = udp_socket.recvfrom(512)
     response = ''
-    udp_socket.send(response, 0, source[3], source[1])
+    udp_socket.send(response, 0, sender_ip, sender_port)
   rescue => e
     puts "Error receiving data: #{e}"
     break
