@@ -71,6 +71,8 @@ languages:
     release_status: "beta"
   - slug: "javascript"
     release_status: "beta"
+  - slug: "ruby"
+    release_status: "alpha"
 
 marketing:
   # Shown in the catalog.
