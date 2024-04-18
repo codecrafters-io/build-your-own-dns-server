@@ -43,3 +43,7 @@ language_pack: nodejs-18
 # Available versions: ruby-3.3
 language_pack: ruby-3.3
 {{/ language_is_ruby }}
+{{#language_is_typescript}}
+# Available versions: deno-1.42
+language_pack: deno-1.42
+{{/language_is_typescript}}
