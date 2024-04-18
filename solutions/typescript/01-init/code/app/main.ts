@@ -9,4 +9,4 @@ for await (const [data, remoteAddr] of server) {
     await server.send(response, remoteAddr);
 }
 
-// server.close();
+server.close();

@@ -13,4 +13,4 @@ console.log("Logs from your program will appear here!");
 //     await server.send(response, remoteAddr);
 // }
 
-// server.close();
+server.close();
