@@ -3,7 +3,7 @@
     "description": "Build your own DNS Server challenge, from CodeCrafters",
     "type": "module",
     "scripts": {
-        "dev": "deno run --allow-all app/main.ts"
+        "dev": "deno run --allow-all --unstable-net app/main.ts"
     },
     "dependencies": {}
 }
