@@ -1,12 +1,12 @@
-const server: Deno.DatagramConn = Deno.listenDatagram({
-    port: 2053,
-    hostname: "127.0.0.1",
-    transport: "udp"
+import * as dgram from 'dgram';
+
+const server: dgram.Socket = dgram.createSocket('udp4');
+
+server.on('message', (data, remoteAddr) => {
+    const response = Buffer.from('');
+    server.send(response, remoteAddr.port, remoteAddr.address);
 });
 
-for await (const [data, remoteAddr] of server) {
-    const response = new TextEncoder().encode("");
-    await server.send(response, remoteAddr);
-}
-
-server.close();
+server.bind(2053, '127.0.0.1', () => {
+    console.log('Server is running on port 2053');
+});
