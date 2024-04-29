@@ -1,0 +1,11 @@
+{
+    "name": "@codecrafters/build-your-own-dns-server",
+    "description": "Build your own DNS Server challenge, from CodeCrafters",
+    "type": "module",
+    "scripts": {
+        "dev": "bun run app/main.ts"
+    },
+    "dependencies": {
+        "async": "^3.2.0"
+    }
+}
