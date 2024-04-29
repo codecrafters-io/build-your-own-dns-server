@@ -14,6 +14,6 @@ console.log("Logs from your program will appear here!");
 //         const response = Buffer.from("");
 //         udpSocket.send(response, remoteAddr.port, remoteAddr.address);
 //     } catch (e) {
-//         console.log(`Error receiving data: ${e}`);
+//         console.log(`Error sending data: ${e}`);
 //     }
 // });

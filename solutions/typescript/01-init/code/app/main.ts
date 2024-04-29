@@ -9,6 +9,6 @@ udpSocket.on("message", (data: Buffer, remoteAddr: dgram.RemoteInfo) => {
         const response = Buffer.from("");
         udpSocket.send(response, remoteAddr.port, remoteAddr.address);
     } catch (e) {
-        console.log(`Error receiving data: ${e}`);
+        console.log(`Error sending data: ${e}`);
     }
 });
