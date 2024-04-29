@@ -1,4 +1,4 @@
-FROM oven/bun:1.1.4-alpine
+FROM oven/bun:1.1.6-alpine
 
 ENV CODECRAFTERS_DEPENDENCY_FILE_PATHS="package.json,bun.lockb"
 

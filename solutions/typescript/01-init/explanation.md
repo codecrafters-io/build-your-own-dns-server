@@ -5,9 +5,8 @@ Study and uncomment the relevant code:
 ```typescript
 // Uncomment this block to pass the first stage
 
-server.bind(2053, '127.0.0.1', () => {
-    console.log('Server is running on port 2053');
-});
+const udpSocket: dgram.Socket = dgram.createSocket("udp4");
+udpSocket.bind(2053, "127.0.0.1");
 ```
 
 Push your changes to pass the first stage:
