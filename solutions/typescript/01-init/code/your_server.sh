@@ -5,6 +5,5 @@
 # CodeCrafters uses this file to test your code. Don't make any changes here!
 #
 # DON'T EDIT THIS!
-# Deno.listenDatagram is still unstable as of Deno 1.42.4
-# https://docs.deno.com/runtime/manual/tools/unstable_flags#--unstable-net
+# bun 1.1.6 is required to run this script, UDP socket support was missing prior to this version.
 exec bun run app/main.ts "$@"
