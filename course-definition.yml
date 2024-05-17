@@ -113,8 +113,7 @@ marketing:
         Didn't even know that was possible!
 
 stages:
-  - legacy_slug: "init" # A identifier for this stage, needs to be unique within a course.
-    slug: "ux2" # A identifier for this stage, needs to be unique within a course.
+  - slug: "ux2" # A identifier for this stage, needs to be unique within a course.
 
     # The name of the stage. This is shown in the course catalog, and on other course pages.
     name: "Setup UDP server"
@@ -149,8 +148,7 @@ stages:
     marketing_md: |-
       In this stage, we'll start a UDP server on port 2053.
 
-  - legacy_slug: "write-headers"
-    slug: "tz1"
+  - slug: "tz1"
     name: "Write header section"
     difficulty: medium
     description_md: |-
@@ -202,8 +200,7 @@ stages:
     marketing_md: |-
       In this stage, we'll write a DNS packet's header contents
 
-  - legacy_slug: "write-question-section"
-    slug: "bf2"
+  - slug: "bf2"
     name: "Write question section"
     difficulty: medium
     description_md: |-
@@ -264,8 +261,7 @@ stages:
     marketing_md: |-
       In this stage, we'll write a DNS packet's question section
 
-  - legacy_slug: "write-answer-section"
-    slug: "xm2"
+  - slug: "xm2"
     name: "Write answer section"
     difficulty: easy
     description_md: |-
@@ -322,8 +318,7 @@ stages:
     marketing_md: |-
       In this stage, we'll write a DNS packet's answer section
 
-  - legacy_slug: "parse-headers"
-    slug: "uc8"
+  - slug: "uc8"
     name: "Parse header section"
     difficulty: hard
     description_md: |-
@@ -365,8 +360,7 @@ stages:
     marketing_md: |-
       In this stage, we'll parse a DNS packet's header section
 
-  - legacy_slug: "parse-question"
-    slug: "hd8"
+  - slug: "hd8"
     name: "Parse question section"
     difficulty: easy
     description_md: |-
@@ -416,8 +410,7 @@ stages:
     marketing_md: |-
       In this stage, we'll parse a DNS packet's question section
 
-  - legacy_slug: "parse-compressed-packet"
-    slug: "yc9"
+  - slug: "yc9"
     name: "Parse compressed packet"
     difficulty: medium
     description_md: |-
@@ -461,8 +454,7 @@ stages:
     marketing_md: |-
       In this stage, we'll parse a DNS packet's question in which the label sequences have been compressed
 
-  - legacy_slug: "forwarding-server"
-    slug: "gt1"
+  - slug: "gt1"
     name: "Forwarding Server"
     difficulty: medium
     description_md: |-
