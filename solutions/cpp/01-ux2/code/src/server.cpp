@@ -1,65 +1,82 @@
-#include <iostream>
 #include <cstring>
-#include <sys/socket.h>
+#include <iostream>
 #include <netinet/in.h>
+#include <sys/socket.h>
 #include <unistd.h>
 
 int main() {
-    // Disable output buffering
-    setbuf(stdout, NULL);
+  // Flush after every std::cout / std::cerr
+  std::cout << std::unitbuf;
+  std::cerr << std::unitbuf;
 
-   int udpSocket;
-   struct sockaddr_in clientAddress;
+  // Disable output buffering
+  setbuf(stdout, NULL);
 
-   udpSocket = socket(AF_INET, SOCK_DGRAM, 0);
-   if (udpSocket == -1) {
-       std::cerr << "Socket creation failed: " << strerror(errno) << "..." << std::endl;
-       return 1;
-   }
+  std::cout << "Logs from your program will appear here!" << std::endl;
 
-   // Since the tester restarts your program quite often, setting REUSE_PORT
-   // ensures that we don't run into 'Address already in use' errors
-   int reuse = 1;
-   if (setsockopt(udpSocket, SOL_SOCKET, SO_REUSEPORT, &reuse, sizeof(reuse)) < 0) {
-       std::cerr << "SO_REUSEPORT failed: " << strerror(errno) << std::endl;
-       return 1;
-   }
+  int udpSocket;
+  struct sockaddr_in clientAddress;
 
-   sockaddr_in serv_addr = { .sin_family = AF_INET,
-                             .sin_port = htons(2053),
-                             .sin_addr = { htonl(INADDR_ANY) },
-                           };
+  // udpSocket = socket(AF_INET, SOCK_DGRAM, 0);
+  // if (udpSocket == -1) {
+  //   std::cerr << "Socket creation failed: " << strerror(errno) << "..."
+  //             << std::endl;
+  //   return 1;
+  // }
 
-   if (bind(udpSocket, reinterpret_cast<struct sockaddr*>(&serv_addr), sizeof(serv_addr)) != 0) {
-       std::cerr << "Bind failed: " << strerror(errno) << std::endl;
-       return 1;
-   }
+  // // Since the tester restarts your program quite often, setting
+  // REUSE_PORT
+  // // ensures that we don't run into 'Address already in use' errors
+  // int reuse = 1;
+  // if (setsockopt(udpSocket, SOL_SOCKET, SO_REUSEPORT, &reuse, sizeof(reuse))
+  // <
+  //     0) {
+  //   std::cerr << "SO_REUSEPORT failed: " << strerror(errno) << std::endl;
+  //   return 1;
+  // }
 
-   int bytesRead;
-   char buffer[512];
-   socklen_t clientAddrLen = sizeof(clientAddress);
+  // sockaddr_in serv_addr = {
+  //     .sin_family = AF_INET,
+  //     .sin_port = htons(2053),
+  //     .sin_addr = {htonl(INADDR_ANY)},
+  // };
 
-   while (true) {
-       // Receive data
-       bytesRead = recvfrom(udpSocket, buffer, sizeof(buffer), 0, reinterpret_cast<struct sockaddr*>(&clientAddress), &clientAddrLen);
-       if (bytesRead == -1) {
-           perror("Error receiving data");
-           break;
-       }
+  // if (bind(udpSocket, reinterpret_cast<struct sockaddr *>(&serv_addr),
+  //          sizeof(serv_addr)) != 0) {
+  //   std::cerr << "Bind failed: " << strerror(errno) << std::endl;
+  //   return 1;
+  // }
 
-       buffer[bytesRead] = '\0';
-       std::cout << "Received " << bytesRead << " bytes: " << buffer << std::endl;
+  // int bytesRead;
+  // char buffer[512];
+  // socklen_t clientAddrLen = sizeof(clientAddress);
 
-       // Create an empty response
-       char response[1] = { '\0' };
+  // while (true) {
+  //   // Receive data
+  //   bytesRead = recvfrom(udpSocket, buffer, sizeof(buffer), 0,
+  //                        reinterpret_cast<struct sockaddr *>(&clientAddress),
+  //                        &clientAddrLen);
+  //   if (bytesRead == -1) {
+  //     perror("Error receiving data");
+  //     break;
+  //   }
 
-       // Send response
-       if (sendto(udpSocket, response, sizeof(response), 0, reinterpret_cast<struct sockaddr*>(&clientAddress), sizeof(clientAddress)) == -1) {
-           perror("Failed to send response");
-       }
-   }
+  //   buffer[bytesRead] = '\0';
+  //   std::cout << "Received " << bytesRead << " bytes: " << buffer <<
+  //   std::endl;
 
-   close(udpSocket);
+  //   // Create an empty response
+  //   char response[1] = {'\0'};
 
-    return 0;
+  //   // Send response
+  //   if (sendto(udpSocket, response, sizeof(response), 0,
+  //              reinterpret_cast<struct sockaddr *>(&clientAddress),
+  //              sizeof(clientAddress)) == -1) {
+  //     perror("Failed to send response");
+  //   }
+  // }
+
+  // close(udpSocket);
+
+  return 0;
 }
