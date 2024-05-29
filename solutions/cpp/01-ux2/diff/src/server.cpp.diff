@@ -1,4 +1,4 @@
-@@ -1,69 +1,65 @@
+@@ -1,73 +1,69 @@
  #include <iostream>
  #include <cstring>
  #include <sys/socket.h>
@@ -6,6 +6,10 @@
  #include <unistd.h>
 
  int main() {
+     // Flush after every std::cout / std::cerr
+     std::cout << std::unitbuf;
+     std::cerr << std::unitbuf;
+
      // Disable output buffering
      setbuf(stdout, NULL);
 
