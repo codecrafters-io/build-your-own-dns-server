@@ -10,6 +10,7 @@
 int main() {
 	// Disable output buffering
 	setbuf(stdout, NULL);
+ 	setbuf(stderr, NULL);
 
  int udpSocket, client_addr_len;
 struct sockaddr_in clientAddress;
