@@ -116,6 +116,8 @@
       target: vcpkg-configuration.json
     - source: starter_templates/cpp/your_server.sh
       target: your_server.sh
+    - source: starter_templates/.gitattributes
+      target: .gitattributes
   template_attributes:
     required_executable: "cmake"
     user_editable_file: "src/server.cpp"
