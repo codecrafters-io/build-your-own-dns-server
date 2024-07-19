@@ -14,7 +14,7 @@ various record types (A, AAAA, CNAME, etc) and more.
 
 # Passing the first stage
 
-The entry point for your `your_server.sh` implementation is in `src/main.rs`.
+The entry point for your `your_program.sh` implementation is in `src/main.rs`.
 Study and uncomment the relevant code, and push your changes to pass the first
 stage:
 
@@ -31,7 +31,7 @@ Time to move on to the next stage!
 Note: This section is for stages 2 and beyond.
 
 1. Ensure you have `cargo (1.70)` installed locally
-1. Run `./your_server.sh` to run your program, which is implemented in
+1. Run `./your_program.sh` to run your program, which is implemented in
    `src/main.rs`. This command compiles your Rust project, so it might be slow
    the first time you run it. Subsequent runs will be fast.
 1. Commit your changes and run `git push origin master` to submit your solution
