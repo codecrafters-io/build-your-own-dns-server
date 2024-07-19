@@ -58,23 +58,17 @@ completion_percentage: 15
 
 # The languages that your course supports.
 languages:
-  - slug: "go"
-  - slug: "python"
-  - slug: "rust"
-  - slug: "java"
-    release_status: "beta"
   - slug: "c"
-    release_status: "beta"
   - slug: "cpp"
-    release_status: "beta"
   - slug: "csharp"
-    release_status: "beta"
+  - slug: "go"
+  - slug: "java"
   - slug: "javascript"
-    release_status: "beta"
+  - slug: "kotlin"
+  - slug: "python"
   - slug: "ruby"
-    release_status: "beta"
+  - slug: "rust"
   - slug: "typescript"
-    release_status: "beta"
 
 marketing:
   # Shown in the catalog.
