@@ -8,4 +8,4 @@
 
 module github.com/codecrafters-io/dns-server-starter-go
 
-go 1.22
+go 1.22.0
