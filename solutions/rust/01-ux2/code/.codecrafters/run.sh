@@ -6,6 +6,4 @@
 #
 # Learn more: https://codecrafters.io/program-interface
 
-set -e # Exit on failure
-
-exec /tmp/codecrafters-dns-target/release/dns-starter-rust "$@"
+exec /tmp/codecrafters-build-dns-server-rust/release/codecrafters-dns-server "$@"
