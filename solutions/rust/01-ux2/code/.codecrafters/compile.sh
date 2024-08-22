@@ -8,4 +8,4 @@
 
 set -e # Exit on failure
 
-cargo build --release --target-dir=/tmp/codecrafters-dns-target --manifest-path Cargo.toml
+cargo build --release --target-dir=/tmp/codecrafters-build-dns-server-rust --manifest-path Cargo.toml
