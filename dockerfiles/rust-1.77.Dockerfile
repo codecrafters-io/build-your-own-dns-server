@@ -12,10 +12,7 @@ RUN cargo clean -p dns-starter-rust --release --target-dir=/tmp/codecrafters-dns
 
 RUN rm -rf /app/src
 
-RUN echo "cd \${CODECRAFTERS_SUBMISSION_DIR} && cargo build --release --target-dir=/tmp/codecrafters-dns-target --manifest-path Cargo.toml" > /codecrafters-precompile.sh
+RUN echo "cd \${CODECRAFTERS_REPOSITORY_DIR} && cargo build --release --target-dir=/tmp/codecrafters-dns-target --manifest-path Cargo.toml" > /codecrafters-precompile.sh
 RUN chmod +x /codecrafters-precompile.sh
 
 ENV CODECRAFTERS_DEPENDENCY_FILE_PATHS="Cargo.toml,Cargo.lock"
-
-# Once the heavy steps are done, we can copy all files back
-COPY . /app
