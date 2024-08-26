@@ -8,7 +8,7 @@ name: "Build your own DNS server"
 
 # A short name for your course, this'll be used in copy like emails.
 # Example: "Redis"
-short_name: "dns"
+short_name: "DNS Server"
 
 # The release status for your course.
 #
