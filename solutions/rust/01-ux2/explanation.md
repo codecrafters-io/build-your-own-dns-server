@@ -4,11 +4,6 @@ Study and uncomment the relevant code:
 
 ```rust
 // Uncomment this block to pass the first stage
-use std::net::UdpSocket;
-```
-
-```rust
-// Uncomment this block to pass the first stage
 let udp_socket = UdpSocket::bind("127.0.0.1:2053").expect("Failed to bind to address");
 let mut buf = [0; 512];
 
