@@ -1,4 +1,4 @@
-The entry point for your dns implementation is in `src/main/kotlin/Main.kt`.
+The entry point for your DNS Server implementation is in `src/main/kotlin/Main.kt`.
 
 Study and uncomment the relevant code: 
 

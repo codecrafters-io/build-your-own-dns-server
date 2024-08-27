@@ -1,4 +1,4 @@
-The entry point for your dns implementation is in `app/main.py`.
+The entry point for your DNS Server implementation is in `app/main.py`.
 
 Study and uncomment the relevant code: 
 

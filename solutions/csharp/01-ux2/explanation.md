@@ -1,4 +1,4 @@
-The entry point for your dns implementation is in `src/Server.cs`.
+The entry point for your DNS Server implementation is in `src/Server.cs`.
 
 Study and uncomment the relevant code: 
 

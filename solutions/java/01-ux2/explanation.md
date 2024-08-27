@@ -1,4 +1,4 @@
-The entry point for your dns implementation is in `src/main/java/Main.java`.
+The entry point for your DNS Server implementation is in `src/main/java/Main.java`.
 
 Study and uncomment the relevant code: 
 

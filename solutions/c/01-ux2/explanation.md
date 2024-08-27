@@ -1,4 +1,4 @@
-The entry point for your dns implementation is in `app/server.c`.
+The entry point for your DNS Server implementation is in `app/server.c`.
 
 Study and uncomment the relevant code: 
 
