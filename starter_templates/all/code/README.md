@@ -13,8 +13,7 @@ The entry point for your `your_program.sh` implementation is in `{{ user_editabl
 push your changes to pass the first stage:
 
 ```sh
-git add .
-git commit -m "pass 1st stage" # any msg
+git commit -am "pass 1st stage" # any msg
 git push origin master
 ```
 

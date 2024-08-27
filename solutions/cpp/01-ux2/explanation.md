@@ -1,4 +1,4 @@
-The entry point for your dns implementation is in `src/server.cpp`.
+The entry point for your DNS Server implementation is in `src/server.cpp`.
 
 Study and uncomment the relevant code: 
 

@@ -1,4 +1,4 @@
-The entry point for your dns implementation is in `app/server.rb`.
+The entry point for your DNS Server implementation is in `app/server.rb`.
 
 Study and uncomment the relevant code: 
 
