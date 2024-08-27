@@ -1,5 +1,5 @@
-// Uncomment this block to pass the first stage
-// use std::net::UdpSocket;
+#[allow(unused_imports)]
+use std::net::UdpSocket;
 
 fn main() {
     // You can use print statements as follows for debugging, they'll be visible when running tests.

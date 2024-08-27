@@ -1,7 +1,6 @@
-@@ -1,27 +1,22 @@
--// Uncomment this block to pass the first stage
--// use std::net::UdpSocket;
-+use std::net::UdpSocket;
+@@ -1,27 +1,23 @@
+ #[allow(unused_imports)]
+ use std::net::UdpSocket;
 
  fn main() {
 -    // You can use print statements as follows for debugging, they'll be visible when running tests.

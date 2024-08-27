@@ -5,6 +5,9 @@ import (
 	"net"
 )
 
+// Ensures gofmt doesn't remove the "net" import in stage 1 (feel free to remove this!)
+var _ = net.ListenUDP
+
 func main() {
 	udpAddr, err := net.ResolveUDPAddr("udp", "127.0.0.1:2053")
 	if err != nil {
