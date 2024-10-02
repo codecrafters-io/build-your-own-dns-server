@@ -1,4 +1,3 @@
-java_dns.jar
-target/*
+*.jar
 target/
 .idea/

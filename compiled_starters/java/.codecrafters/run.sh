@@ -8,4 +8,4 @@
 
 set -e # Exit on failure
 
-exec java -jar /tmp/codecrafters-build-dns-server-java/java_dns.jar "$@"
+exec java -jar /tmp/codecrafters-build-dns-server-java/codecrafters-dns-server.jar "$@"
