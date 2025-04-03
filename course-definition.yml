@@ -69,6 +69,7 @@ languages:
   - slug: "ruby"
   - slug: "rust"
   - slug: "typescript"
+  - slug: "zig"
 
 marketing:
   # Shown in the catalog.
