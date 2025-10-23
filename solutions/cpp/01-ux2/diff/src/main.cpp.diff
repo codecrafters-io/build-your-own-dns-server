@@ -18,7 +18,7 @@
 +   int udpSocket;
 +   struct sockaddr_in clientAddress;
 
--      // Uncomment the code below to pass the first stage the first stage
+-      // Uncomment this block to pass the first stage
 -//    int udpSocket;
 -//    struct sockaddr_in clientAddress;
 -//
