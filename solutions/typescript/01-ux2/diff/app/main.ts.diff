@@ -6,7 +6,7 @@
 +const udpSocket: dgram.Socket = dgram.createSocket("udp4");
 +udpSocket.bind(2053, "127.0.0.1");
 
--// Uncomment this block to pass the first stage
+-// Uncomment the code below to pass the first stage the first stage
 -//
 -// const udpSocket: dgram.Socket = dgram.createSocket("udp4");
 -// udpSocket.bind(2053, "127.0.0.1");

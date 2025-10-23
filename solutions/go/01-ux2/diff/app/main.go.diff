@@ -18,7 +18,7 @@
 +		return
 +	}
 
--	// Uncomment this block to pass the first stage
+-	// Uncomment the code below to pass the first stage the first stage
 -	//
 -	// udpAddr, err := net.ResolveUDPAddr("udp", "127.0.0.1:2053")
 -	// if err != nil {

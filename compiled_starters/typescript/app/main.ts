@@ -3,7 +3,7 @@ import * as dgram from "dgram";
 // You can use print statements as follows for debugging, they'll be visible when running tests.
 console.log("Logs from your program will appear here!");
 
-// Uncomment this block to pass the first stage
+// Uncomment the code below to pass the first stage the first stage
 //
 // const udpSocket: dgram.Socket = dgram.createSocket("udp4");
 // udpSocket.bind(2053, "127.0.0.1");
