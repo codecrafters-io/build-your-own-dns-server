@@ -15,7 +15,7 @@ int main() {
     // You can use print statements as follows for debugging, they'll be visible when running tests.
     std::cout << "Logs from your program will appear here!" << std::endl;
 
-      // Uncomment this block to pass the first stage
+      // Uncomment the code below to pass the first stage
 //    int udpSocket;
 //    struct sockaddr_in clientAddress;
 //
