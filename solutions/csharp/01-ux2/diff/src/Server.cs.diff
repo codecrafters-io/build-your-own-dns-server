@@ -11,7 +11,7 @@
 +int port = 2053;
 +IPEndPoint udpEndPoint = new IPEndPoint(ipAddress, port);
 
--// Uncomment this block to pass the first stage
+-// Uncomment the code below to pass the first stage the first stage
 -// // Resolve UDP address
 -// IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
 -// int port = 2053;

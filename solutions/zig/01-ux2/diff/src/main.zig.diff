@@ -22,7 +22,7 @@
 +        var client_addr: posix.sockaddr = undefined;
 +        var client_addr_len: posix.socklen_t = @sizeOf(posix.sockaddr);
 
--    // Uncomment this block to pass the first stage
+-    // Uncomment the code below to pass the first stage the first stage
 -    //
 -    // var buf: [1024]u8 = undefined;
 -    // while (true) {
