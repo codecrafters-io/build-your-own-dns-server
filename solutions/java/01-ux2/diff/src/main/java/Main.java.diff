@@ -14,7 +14,7 @@
 +        serverSocket.receive(packet);
 +        System.out.println("Received data");
 
--    // Uncomment the code below to pass the first stage the first stage
+-    // Uncomment this block to pass the first stage
 -    //
 -    // try(DatagramSocket serverSocket = new DatagramSocket(2053)) {
 -    //   while(true) {

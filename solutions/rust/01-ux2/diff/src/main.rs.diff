@@ -8,7 +8,7 @@
 +    let udp_socket = UdpSocket::bind("127.0.0.1:2053").expect("Failed to bind to address");
 +    let mut buf = [0; 512];
 
--    // Uncomment the code below to pass the first stage the first stage
+-    // Uncomment this block to pass the first stage
 -    // let udp_socket = UdpSocket::bind("127.0.0.1:2053").expect("Failed to bind to address");
 -    // let mut buf = [0; 512];
 -    //
