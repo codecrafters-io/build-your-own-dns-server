@@ -15,12 +15,11 @@ various record types (A, AAAA, CNAME, etc) and more.
 # Passing the first stage
 
 The entry point for your `your_program.sh` implementation is in `src/Server.cs`.
-Study and uncomment the relevant code, and push your changes to pass the first
-stage:
+Study and uncomment the relevant code, and then run the command below to execute
+the tests on our servers:
 
 ```sh
-git commit -am "pass 1st stage" # any msg
-git push origin master
+codecrafters submit
 ```
 
 Time to move on to the next stage!
