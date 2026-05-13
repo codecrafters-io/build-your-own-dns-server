@@ -10,11 +10,10 @@ In this challenge, you'll build a DNS server that's capable of parsing and creat
 # Passing the first stage
 
 The entry point for your `your_program.sh` implementation is in `{{ user_editable_file }}`. Study and uncomment the relevant code, and
-push your changes to pass the first stage:
+then run the command below to execute the tests on our servers:
 
 ```sh
-git commit -am "pass 1st stage" # any msg
-git push origin master
+codecrafters submit
 ```
 
 Time to move on to the next stage!
