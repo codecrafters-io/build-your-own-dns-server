@@ -13,7 +13,7 @@ The header section of a DNS message contains the following fields: (we've also i
 | Query/Response Indicator (QR)     | 1 bit   | 1 for a reply packet, 0 for a question packet. <br />**Expected value**: 1.                                          |
 | Operation Code (OPCODE)           | 4 bits  | Specifies the kind of query in a message. <br />**Expected value**: 0.                                               |
 | Authoritative Answer (AA)         | 1 bit   | 1 if the responding server "owns" the domain queried, i.e., it's authoritative. <br />**Expected value**: 0.         |
-| Truncation (TC)                   | 1 bit   | 1 if the message is larger than 512 bytes. Always 0 in UDP responses. <br />**Expected value**: 0.                   |
+| Truncation (TC)                   | 1 bit   | 1 if the message is larger than 512 bytes.<br />**Expected value**: 0.                   |
 | Recursion Desired (RD)            | 1 bit   | Sender sets this to 1 if the server should recursively resolve this query, 0 otherwise. <br />**Expected value**: 0. |
 | Recursion Available (RA)          | 1 bit   | Server sets this to 1 to indicate that recursion is available. <br />**Expected value**: 0.                          |
 | Reserved (Z)                      | 3 bits  | Used by DNSSEC queries. At inception, it was reserved for future use. <br />**Expected value**: 0.                   |
