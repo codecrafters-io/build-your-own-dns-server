@@ -15,7 +15,7 @@ It'll then send a UDP packet (containing a DNS query) to port 2053. Your program
 Your program will need to respond with a DNS reply packet that contains:
 - a header section (same as in stage #5)
 - a question section (same as in stage #6)
-- an answer section (new in this stage) mimicing what you received from the DNS server to which you forwarded the request.
+- an answer section (new in this stage) mimicking what you received from the DNS server to which you forwarded the request.
 
 Here are a few assumptions you can make about the tester -
 * It will always send you queries for `A` record type. So your parsing logic only needs to take care of this.
