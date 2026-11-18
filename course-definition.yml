@@ -34,10 +34,11 @@ release_status: "live"
 # >
 # > Along the way, you'll learn about TCP servers, the Redis Protocol and more.
 description_md: |-
-  DNS is a protocol used to resolve domain names to IP addresses. In this challenge, you'll build a DNS server that's capable of responding to
-  basic DNS queries.
+  What bytes does a DNS server receive when a client asks for a domain's IP address?
 
-  Along the way you'll learn about the DNS protocol, DNS packet format, DNS record types, UDP servers and more.
+  The query encodes each dot-separated part of the name with its byte length. An address record associates that name with an IP address in the reply. You'll build a UDP server that reads these messages, handles compressed names, and returns IPv4 address records. Its final version forwards queries to another DNS server to obtain the addresses.
+
+  You'll practice binary serialization, packed header fields, byte offsets, and matching replies to the requests that produced them.
 
 # This is shown on the catalog. Plaintext only, recommended length ~10 words.
 #
