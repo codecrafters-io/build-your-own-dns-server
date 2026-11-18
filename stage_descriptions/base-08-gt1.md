@@ -1,28 +1,53 @@
-In this stage, you will implement a forwarding DNS server.
+Your responses now contain the requested names, but their addresses are still
+placeholders. In this stage, you'll forward questions to another DNS server and
+return its answers to your client.
 
-A forwarding DNS server, also known as a DNS forwarder, is a DNS server that is configured to pass DNS queries it receives from clients to another DNS server for resolution. Instead of directly resolving DNS queries by looking up the information in its own local cache or authoritative records.
+### Forwarding queries
 
----
-In this stage the tester will execute your program like this:
+A forwarding DNS server sends questions to an upstream resolver, the server
+responsible for obtaining the answer. Your program handles the client's request
+and response while the upstream server performs the lookup. You don't need a
+local cache or your own authoritative records.
+
+### Tests
+
+The tester starts your program with the upstream resolver's address:
 
 ```bash
-./your_server --resolver <address>
+./your_program.sh --resolver <address>
 ```
-* where `<address>` will be of the form `<ip>:<port>`
 
-It'll then send a UDP packet (containing a DNS query) to port 2053. Your program will be responsible for forwarding DNS queries to a specified DNS server, and then returning the response to the original requester (i.e. the tester).
+`<address>` has the form `<ip>:<port>`.
+
+It'll then send a UDP packet (containing a DNS query) to port 2053. Your program
+will be responsible for forwarding DNS queries to a specified DNS server, and
+then returning the response to the original requester (i.e. the tester).
 
 Your program will need to respond with a DNS reply packet that contains:
-- a header section (same as in stage #5)
-- a question section (same as in stage #6)
-- an answer section (new in this stage) mimicing what you received from the DNS server to which you forwarded the request.
 
-Here are a few assumptions you can make about the tester -
-* It will always send you queries for `A` record type. So your parsing logic only needs to take care of this.
+- a header section with the request-derived fields
+- a question section containing the client's questions
+- an answer section carrying the records received from the upstream server,
+  including their names, types, TTLs, and address data.
 
-Here are few assumptions you can make about the DNS server you are forwarding the requests to -
-* It will always respond with an answer section for the queries that originate from the tester.
-* It will not contain other sections like (authority section and additional section)
-* It will only respond when there is only one question in the question section. If you send multiple questions in the question section, it will not respond at all. So when you receive multiple questions in the question section you will need to split it into two DNS packets and then send them to this resolver then merge the response in a single packet.
+The tester sends only A-record queries in this stage.
 
-Remember to mimic the packet identifier value sent by the tester in your response.
+Use these assumptions about the upstream server:
+
+- Its replies contain an answer section for the tested queries.
+- Its replies contain no authority or additional records.
+- Treat it as supporting one question per query. A client request with multiple
+  questions therefore requires one upstream query per question and one combined
+  response to the client.
+
+The client-facing response must retain the original request's ID and questions,
+with counts matching its sections. Return the upstream address data instead of
+the arbitrary addresses used in earlier stages.
+
+### Notes
+
+- Compression pointers refer to offsets within their own message. If you
+  construct a new packet from part of another packet, its names must still refer
+  to the correct bytes. Uncompressed names remain valid.
+- The `--resolver` value is the upstream destination. Your server continues
+  listening for clients on port `2053`.
